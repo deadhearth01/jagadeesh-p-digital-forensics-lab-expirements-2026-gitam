@@ -1,156 +1,154 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Exp 7 — Live Forensics with Autopsy | Jagadeesh P</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&family=Roboto:wght@400;500&family=Roboto+Mono&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="../style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Experiment 7 - Autopsy Case Investigation</title>
+  <link rel="stylesheet" href="../style.css">
 </head>
 <body>
 
-<nav class="site-nav">
-  <div class="nav-inner">
-    <a href="../index.html" class="site-logo">
-      <div class="logo-icon">J</div>
-      <span class="logo-text">Jagadeesh P</span>
-    </a>
-    <ul class="nav-links">
-      <li><a href="../index.html">Home</a></li>
-      <li><a href="../index.html" class="active">Experiments</a></li>
-      <li><a href="../about.html">About</a></li>
-    </ul>
-  </div>
-</nav>
+<header class="gs-header">
+  <div class="gs-menu-btn">☰</div>
+  <div class="gs-site-name">Digital Forensics Lab</div>
+  <nav class="gs-header-nav">
+    <a href="../index.html">Home</a>
+    <a href="../about.html">About</a>
+  </nav>
+</header>
 
-<div class="breadcrumb">
-  <a href="../index.html">Home</a>
-  <span>/</span>
-  <span>Experiment 07 — Live Forensics with Autopsy</span>
+<div class="gs-breadcrumb">
+  <a href="../index.html">Home</a> / Experiment 7
 </div>
 
-<div class="exp-header">
-  <div class="exp-num">Experiment 07</div>
-  <h1>Live Forensic Case Investigation Using Autopsy</h1>
+<div class="gs-subpage-banner">
+  <div class="gs-exp-num">EXPERIMENT 7</div>
+  <h1>Live forensic case investigation using Autopsy</h1>
 </div>
 
-<div class="page-wrap">
+<div class="gs-content">
 
-  <div class="content-block">
-    <h2><span class="icon">🎯</span> Aim</h2>
-    <p>To conduct a complete forensic case investigation using the Autopsy digital forensics platform — creating a case, ingesting a disk image, running ingest modules, and producing a final forensic report.</p>
-  </div>
-
-  <div class="content-block">
-    <h2><span class="icon">📖</span> Theory</h2>
-    <p><strong>Autopsy</strong> is a free, open-source digital forensics platform developed by Basis Technology. It is widely used by law enforcement agencies, military organizations, and corporate investigators. Autopsy provides a graphical interface over The Sleuth Kit (TSK) — a collection of open-source forensic tools.</p>
-    <p>Autopsy's <strong>ingest modules</strong> automatically analyze a disk image or live device and extract:</p>
-    <ul style="margin-left:20px; color:#5f6368; font-size:15px; line-height:2;">
-      <li><strong>File System Analysis</strong> — Parses NTFS, FAT, EXT2/3/4, HFS+ file systems</li>
-      <li><strong>Keyword Search</strong> — Searches the entire disk for specific strings or regex patterns</li>
-      <li><strong>Hash Lookup</strong> — Identifies known malicious files using NSRL or custom hash sets</li>
-      <li><strong>Web Artifacts</strong> — Browser history, cookies, and bookmarks</li>
-      <li><strong>Email Artifacts</strong> — PST/MBOX parsing</li>
-      <li><strong>EXIF Parser</strong> — GPS and device metadata from images</li>
-      <li><strong>Recent Activity</strong> — Windows event logs, registry hives, prefetch files</li>
-      <li><strong>Android Analyzer</strong> — Mobile device artifacts from Android images</li>
-    </ul>
-    <p>The Autopsy interface uses a case-based workflow consistent with legal evidence management. Each case has a unique identifier, and all actions are logged in the case database for reproducibility and admissibility.</p>
-    <div class="info-chips">
-      <span class="chip">Autopsy</span>
-      <span class="chip">The Sleuth Kit</span>
-      <span class="chip">Ingest Modules</span>
-      <span class="chip">Timeline Analysis</span>
-      <span class="chip">Forensic Report</span>
+  <div class="gs-section">
+    <div class="gs-heading">
+      <h2>Aim</h2>
+      <div class="gs-heading-line"></div>
     </div>
+    <p class="gs-text">
+      To conduct a comprehensive forensic investigation of a disk image using Autopsy digital forensics platform and analyze various artifacts.
+    </p>
   </div>
 
-  <div class="content-block">
-    <h2><span class="icon">🛠️</span> Tools Required</h2>
-    <p><strong>Autopsy (v4.x)</strong> — The primary investigation platform.</p>
-    <p><strong>A Disk Image (E01 / DD)</strong> — The evidence file created in Experiment 04, or a sample forensic image.</p>
-    <p><strong>Java Runtime Environment (JRE)</strong> — Required by Autopsy.</p>
+  <div class="gs-section-alt">
+    <div class="gs-heading">
+      <h2>Theory</h2>
+      <div class="gs-heading-line"></div>
+    </div>
+    <p class="gs-text">
+      Autopsy is a free, open-source digital forensics platform used by law enforcement, military, and corporate investigators to analyze hard drives and smartphones. It provides a graphical interface to The Sleuth Kit and other forensic tools.
+    </p>
+    <p class="gs-text">
+      Autopsy can analyze disk images in various formats (E01, DD, etc.) and automatically extracts artifacts such as web history, deleted files, EXIF data from images, email messages, and more. It uses ingest modules to process the data and present findings in an organized manner.
+    </p>
+    <p class="gs-text">
+      The tool creates a case file that organizes all evidence and analysis. Investigators can add tags, comments, and generate reports. Autopsy supports keyword searching across all files and can recover deleted files from unallocated space.
+    </p>
   </div>
 
-  <div class="content-block">
-    <h2><span class="icon">📋</span> Procedure</h2>
-    <ol class="steps-list">
-      <li>
-        <div class="step-content">
-          <h4>Create a New Case</h4>
-          <p>Open Autopsy and click <strong>New Case</strong>. Enter the case name (e.g., <code>DF_Lab_Case01</code>), base directory, case number, and examiner name. Click Finish.</p>
-        </div>
+  <div class="gs-section">
+    <div class="gs-heading">
+      <h2>Tools Required</h2>
+      <div class="gs-heading-line"></div>
+    </div>
+    <ul class="gs-list">
+      <li>Autopsy Digital Forensics Platform (free download)</li>
+      <li>A forensic disk image (E01 or DD format)</li>
+      <li>Sufficient RAM and storage for processing</li>
+      <li>Windows operating system</li>
+    </ul>
+  </div>
+
+  <div class="gs-section-alt">
+    <div class="gs-heading">
+      <h2>Procedure</h2>
+      <div class="gs-heading-line"></div>
+    </div>
+    <ol class="gs-steps">
+      <li>Download and install Autopsy from the official website (sleuthkit.org)</li>
+      <li>Launch Autopsy and create a new case (enter case name, number, examiner details)</li>
+      <li>Add a data source - select the disk image file to analyze</li>
+      <li>Configure ingest modules (select which analysis modules to run):
+        <ul class="gs-list">
+          <li>Recent Activity - browser history, downloads, recent documents</li>
+          <li>Hash Lookup - identify known files</li>
+          <li>File Type Identification - categorize files</li>
+          <li>Keyword Search - search for specific terms</li>
+          <li>Email Parser - extract email messages</li>
+        </ul>
       </li>
-      <li>
-        <div class="step-content">
-          <h4>Add a Data Source</h4>
-          <p>Choose <strong>Disk Image or VM File</strong> as the data source type. Browse to the E01 or DD image created in Experiment 04. Click Next.</p>
-        </div>
-      </li>
-      <li>
-        <div class="step-content">
-          <h4>Configure Ingest Modules</h4>
-          <p>Select the ingest modules to run: Recent Activity, Hash Lookup, File Type Identification, Keyword Search, Email Parser, EXIF Parser, and Extension Mismatch Detector. Click Finish to begin ingestion.</p>
-        </div>
-      </li>
-      <li>
-        <div class="step-content">
-          <h4>Monitor Ingestion Progress</h4>
-          <p>The bottom progress bar shows ingestion status. Wait for all modules to complete. This may take several minutes depending on image size.</p>
-        </div>
-      </li>
-      <li>
-        <div class="step-content">
-          <h4>Explore the Results Tree</h4>
-          <p>In the left panel, explore the tree: <strong>Data Artifacts → Web History</strong>, <strong>Deleted Files</strong>, <strong>Email Messages</strong>, <strong>EXIF Metadata</strong>, <strong>Interesting Items</strong>, etc.</p>
-        </div>
-      </li>
-      <li>
-        <div class="step-content">
-          <h4>Use the Timeline Viewer</h4>
-          <p>Go to <strong>Tools → Timeline</strong>. Switch to <strong>Counts View</strong> to see file activity over time. Identify spikes in file creation, modification, or access that correspond to suspicious events.</p>
-        </div>
-      </li>
-      <li>
-        <div class="step-content">
-          <h4>Tag Key Evidence</h4>
-          <p>Right-click on items of interest and select <strong>Add File Tag → Notable Item</strong>. Add descriptive comments to support the forensic narrative.</p>
-        </div>
-      </li>
-      <li>
-        <div class="step-content">
-          <h4>Generate the Final Report</h4>
-          <p>Go to <strong>Generate Report</strong>. Choose HTML Report. The report will include all tagged items, ingest results, and case metadata. Save it as the final forensic case report.</p>
-        </div>
-      </li>
+      <li>Start the ingest process and wait for analysis to complete</li>
+      <li>Browse the Results tree to examine extracted artifacts</li>
+      <li>Check Web History, Web Downloads, and Web Cookies</li>
+      <li>Examine the Deleted Files section for recovered files</li>
+      <li>Use keyword search to find specific content</li>
+      <li>Tag important evidence and add examiner comments</li>
+      <li>Generate an HTML report summarizing findings</li>
     </ol>
   </div>
 
-  <div class="content-block">
-    <h2><span class="icon">🖼️</span> Screenshots</h2>
-    <div class="img-row">
-      <div class="img-placeholder"><div class="icon">🖼️</div>Autopsy — Case Tree View</div>
-      <div class="img-placeholder"><div class="icon">🖼️</div>Timeline Analysis View</div>
-      <div class="img-placeholder"><div class="icon">🖼️</div>Generated HTML Report</div>
+  <div class="gs-section">
+    <div class="gs-heading">
+      <h2>Screenshots</h2>
+      <div class="gs-heading-line"></div>
+    </div>
+    <div class="gs-image-row">
+      <div class="gs-image-block">
+        <div class="gs-image-placeholder">Screenshot 1</div>
+        <div class="gs-image-caption">Creating a new case in Autopsy</div>
+      </div>
+      <div class="gs-image-block">
+        <div class="gs-image-placeholder">Screenshot 2</div>
+        <div class="gs-image-caption">Selecting ingest modules for analysis</div>
+      </div>
+    </div>
+    <div class="gs-image-row">
+      <div class="gs-image-block">
+        <div class="gs-image-placeholder">Screenshot 3</div>
+        <div class="gs-image-caption">Autopsy main interface showing file tree</div>
+      </div>
+      <div class="gs-image-block">
+        <div class="gs-image-placeholder">Screenshot 4</div>
+        <div class="gs-image-caption">Extracted web history artifacts</div>
+      </div>
+    </div>
+    <div class="gs-image-row">
+      <div class="gs-image-block">
+        <div class="gs-image-placeholder">Screenshot 5</div>
+        <div class="gs-image-caption">Recovered deleted files</div>
+      </div>
     </div>
   </div>
 
-  <div class="content-block">
-    <h2><span class="icon">📝</span> Observations &amp; Result</h2>
-    <p>Autopsy successfully ingested the disk image and all configured modules ran without errors. The results tree populated with web history, deleted files, email artifacts, EXIF data, and keyword search hits. The timeline view revealed a clear pattern of file access. Tagged evidence items were included in the HTML forensic report, which documented the complete investigation workflow.</p>
-    <p><strong>Result:</strong> A complete forensic case investigation was conducted using Autopsy, demonstrating the platform's ability to automate artifact extraction and generate a court-admissible forensic report.</p>
+  <div class="gs-section-alt">
+    <div class="gs-heading">
+      <h2>Result</h2>
+      <div class="gs-heading-line"></div>
+    </div>
+    <p class="gs-text">
+      A comprehensive forensic investigation was successfully conducted using Autopsy. The tool automatically extracted various artifacts including web browsing history, deleted files, and metadata from images. The organized presentation of findings and the ability to generate reports makes Autopsy an effective tool for digital forensic investigations.
+    </p>
   </div>
 
-  <div class="exp-nav">
-    <a href="exp6.html">← Experiment 06</a>
-    <a href="exp8.html">Experiment 08 →</a>
+  <div class="gs-exp-nav">
+    <a href="exp6.html">← Experiment 6</a>
+    <a href="exp8.html">Experiment 8 →</a>
   </div>
 
 </div>
 
-<footer class="site-footer">
-  <p>Digital Forensics Laboratory &nbsp;·&nbsp; <strong>Jagadeesh P</strong> &nbsp;·&nbsp; Roll No: 2023000042 &nbsp;·&nbsp; GITAM University</p>
+<footer class="gs-footer">
+  <div class="gs-footer-bottom">
+    Jagadeesh P | Roll No: 2023000042 | GITAM University
+  </div>
 </footer>
 
 </body>

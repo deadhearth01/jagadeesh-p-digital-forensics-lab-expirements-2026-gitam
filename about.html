@@ -1,55 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>About — Jagadeesh P</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&family=Roboto:wght@400;500&family=Roboto+Mono&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About - Digital Forensics Lab</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<nav class="site-nav">
-  <div class="nav-inner">
-    <a href="index.html" class="site-logo">
-      <div class="logo-icon">J</div>
-      <span class="logo-text">Jagadeesh P</span>
-    </a>
-    <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="experiments.html">Experiments</a></li>
-      <li><a href="about.html" class="active">About</a></li>
-    </ul>
-  </div>
-</nav>
+<header class="gs-header">
+  <div class="gs-menu-btn">☰</div>
+  <div class="gs-site-name">Digital Forensics Lab</div>
+  <nav class="gs-header-nav">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+  </nav>
+</header>
 
-<div class="page-wrap" style="max-width:700px">
-  <div class="about-card">
-    <div class="avatar">J</div>
-    <h2>Jagadeesh P</h2>
-    <p>Roll Number: 2023000042</p>
-    <p style="margin-top:6px; font-size:13px; opacity:0.75;">B.Tech — GITAM University</p>
-  </div>
-
-  <div class="content-block">
-    <h2><span class="icon">📋</span> Student Profile</h2>
-    <p><strong>Name:</strong> Jagadeesh P</p>
-    <p><strong>Roll Number:</strong> 2023000042</p>
-    <p><strong>Program:</strong> B.Tech (Computer Science &amp; Engineering)</p>
-    <p><strong>University:</strong> GITAM (Deemed to be University)</p>
-    <p><strong>Course:</strong> Digital Forensics Laboratory</p>
-  </div>
-
-  <div class="content-block">
-    <h2><span class="icon">🔬</span> About This Site</h2>
-    <p>This website documents all nine experiments conducted as part of the Digital Forensics Laboratory course. Each experiment page includes the aim, theory, tools used, step-by-step procedure, and observations.</p>
-    <p>The experiments cover a wide range of forensic techniques — from file recovery and steganography to network packet analysis and live system investigation.</p>
-  </div>
+<div class="gs-breadcrumb">
+  <a href="index.html">Home</a> / About
 </div>
 
-<footer class="site-footer">
-  <p>Digital Forensics Laboratory &nbsp;·&nbsp; <strong>Jagadeesh P</strong> &nbsp;·&nbsp; Roll No: 2023000042 &nbsp;·&nbsp; GITAM University</p>
+<div class="gs-subpage-banner">
+  <h1>About This Site</h1>
+</div>
+
+<div class="gs-content">
+
+  <div class="gs-section">
+    <div class="gs-heading">
+      <h2>About Me</h2>
+      <div class="gs-heading-line"></div>
+    </div>
+    <p class="gs-text gs-text-center">
+      <strong>Name:</strong> Jagadeesh P<br>
+      <strong>Roll Number:</strong> 2023000042<br>
+      <strong>Program:</strong> B.Tech Computer Science and Engineering<br>
+      <strong>University:</strong> GITAM
+    </p>
+  </div>
+
+  <div class="gs-section-alt">
+    <div class="gs-heading">
+      <h2>About This Course</h2>
+      <div class="gs-heading-line"></div>
+    </div>
+    <p class="gs-text">
+      Digital Forensics is a branch of forensic science focused on the recovery and investigation of material found in digital devices. This course covers the fundamental concepts and practical techniques used in digital forensic investigations.
+    </p>
+    <p class="gs-text">
+      Through hands-on laboratory experiments, students learn to use industry-standard tools for data recovery, disk imaging, network analysis, and evidence collection. The skills developed in this course are essential for careers in cybersecurity, law enforcement, and IT security.
+    </p>
+  </div>
+
+  <div class="gs-section">
+    <div class="gs-heading">
+      <h2>Course Objectives</h2>
+      <div class="gs-heading-line"></div>
+    </div>
+    <ul class="gs-list">
+      <li>Understand the fundamentals of digital forensics and its legal aspects</li>
+      <li>Learn to use forensic tools for data acquisition and analysis</li>
+      <li>Develop skills in recovering deleted files and hidden data</li>
+      <li>Analyze network traffic for security investigations</li>
+      <li>Document and present forensic findings professionally</li>
+    </ul>
+  </div>
+
+  <div class="gs-section-alt">
+    <div class="gs-heading">
+      <h2>Tools Covered</h2>
+      <div class="gs-heading-line"></div>
+    </div>
+    <ul class="gs-list">
+      <li><strong>Autopsy</strong> - Open-source digital forensics platform</li>
+      <li><strong>FTK Imager</strong> - Forensic disk imaging tool</li>
+      <li><strong>Recuva</strong> - File recovery software</li>
+      <li><strong>Wireshark</strong> - Network protocol analyzer</li>
+      <li><strong>Sysinternals</strong> - Windows system utilities</li>
+      <li><strong>Exifreader</strong> - EXIF metadata extraction</li>
+    </ul>
+  </div>
+
+</div>
+
+<footer class="gs-footer">
+  <div class="gs-footer-inner">
+    <div class="gs-footer-col">
+      <h4>Quick Links</h4>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+    </div>
+    <div class="gs-footer-col">
+      <h4>Contact</h4>
+      <a href="#">GITAM University</a>
+    </div>
+  </div>
+  <div class="gs-footer-bottom">
+    Jagadeesh P | Roll No: 2023000042
+  </div>
 </footer>
 
 </body>

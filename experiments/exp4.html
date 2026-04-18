@@ -1,156 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Exp 4 — Forensic Disk Image with FTKImager | Jagadeesh P</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&family=Roboto:wght@400;500&family=Roboto+Mono&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="../style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Experiment 4 - FTK Imager Disk Imaging</title>
+  <link rel="stylesheet" href="../style.css">
 </head>
 <body>
 
-<nav class="site-nav">
-  <div class="nav-inner">
-    <a href="../index.html" class="site-logo">
-      <div class="logo-icon">J</div>
-      <span class="logo-text">Jagadeesh P</span>
-    </a>
-    <ul class="nav-links">
-      <li><a href="../index.html">Home</a></li>
-      <li><a href="../index.html" class="active">Experiments</a></li>
-      <li><a href="../about.html">About</a></li>
-    </ul>
-  </div>
-</nav>
+<header class="gs-header">
+  <div class="gs-menu-btn">☰</div>
+  <div class="gs-site-name">Digital Forensics Lab</div>
+  <nav class="gs-header-nav">
+    <a href="../index.html">Home</a>
+    <a href="../about.html">About</a>
+  </nav>
+</header>
 
-<div class="breadcrumb">
-  <a href="../index.html">Home</a>
-  <span>/</span>
-  <span>Experiment 04 — Forensic Disk Imaging with FTKImager</span>
+<div class="gs-breadcrumb">
+  <a href="../index.html">Home</a> / Experiment 4
 </div>
 
-<div class="exp-header">
-  <div class="exp-num">Experiment 04</div>
-  <h1>Creating a Forensic Image of a Hard Drive Using FTK Imager</h1>
+<div class="gs-subpage-banner">
+  <div class="gs-exp-num">EXPERIMENT 4</div>
+  <h1>Creating the forensic image of the hard drive using FTK Imager forensics</h1>
 </div>
 
-<div class="page-wrap">
+<div class="gs-content">
 
-  <div class="content-block">
-    <h2><span class="icon">🎯</span> Aim</h2>
-    <p>To create a forensically sound, bit-for-bit image of a hard drive using FTK Imager and to verify the integrity of the image using MD5 and SHA-1 hash values.</p>
-  </div>
-
-  <div class="content-block">
-    <h2><span class="icon">📖</span> Theory</h2>
-    <p>In digital forensics, investigators must never work directly on original evidence. Instead, a <strong>forensic image</strong> — an exact, sector-by-sector duplicate of the original storage media — is created and all analysis is performed on the copy. This preserves the integrity of the original evidence and ensures admissibility in court.</p>
-    <p><strong>FTK Imager</strong> (Forensic Toolkit Imager) by AccessData is one of the most widely used tools for creating forensic images. It supports multiple image formats including:</p>
-    <ul style="margin-left:20px; color:#5f6368; font-size:15px; line-height:2;">
-      <li><strong>E01 (Expert Witness Format)</strong> — Compressed, with embedded case metadata and hash verification</li>
-      <li><strong>RAW / DD</strong> — Uncompressed bit-for-bit copy</li>
-      <li><strong>AFF (Advanced Forensics Format)</strong> — Open standard with metadata support</li>
-    </ul>
-    <p><strong>Hash Verification</strong> is fundamental to forensic imaging. Before imaging, the hash (MD5/SHA-256) of the source drive is computed. After imaging, the hash of the image is computed and compared. Matching hashes prove that the copy is identical to the original — a requirement for evidence admissibility under the best evidence rule.</p>
-    <p>A <strong>write blocker</strong> (hardware or software) must be used to prevent any writes to the source drive during imaging, which would alter evidence and invalidate the hash.</p>
-    <div class="info-chips">
-      <span class="chip">FTK Imager</span>
-      <span class="chip">E01 Format</span>
-      <span class="chip">MD5 / SHA-1</span>
-      <span class="chip">Write Blocker</span>
-      <span class="chip">Chain of Custody</span>
+  <div class="gs-section">
+    <div class="gs-heading">
+      <h2>Aim</h2>
+      <div class="gs-heading-line"></div>
     </div>
+    <p class="gs-text">
+      To create a bit-by-bit forensic image of a storage device using FTK Imager and verify its integrity using hash values.
+    </p>
   </div>
 
-  <div class="content-block">
-    <h2><span class="icon">🛠️</span> Tools Required</h2>
-    <p><strong>FTK Imager (v4.x)</strong> — Free forensic imaging utility from AccessData / Exterro.</p>
-    <p><strong>Hardware Write Blocker</strong> — Or enable FTK Imager's software write-blocking feature to protect source media.</p>
-    <p><strong>Source Drive</strong> — USB drive or secondary HDD to be imaged.</p>
-    <p><strong>Destination Drive</strong> — Separate storage with sufficient space to hold the image.</p>
+  <div class="gs-section-alt">
+    <div class="gs-heading">
+      <h2>Theory</h2>
+      <div class="gs-heading-line"></div>
+    </div>
+    <p class="gs-text">
+      Forensic disk imaging is the process of creating an exact bit-for-bit copy of a storage device. Unlike a simple file copy, a forensic image captures everything on the drive including deleted files, file slack, and unallocated space. This ensures no evidence is missed during investigation.
+    </p>
+    <p class="gs-text">
+      FTK Imager is a free forensic imaging tool developed by AccessData. It can create forensic images in various formats including E01 (EnCase format), DD (raw), and AFF. The tool also generates hash values (MD5 and SHA1) to verify that the image is an exact copy of the original.
+    </p>
+    <p class="gs-text">
+      Hash verification is crucial in forensics because it proves the evidence has not been tampered with. If the hash of the image matches the hash of the original drive, we can confirm the image is authentic.
+    </p>
   </div>
 
-  <div class="content-block">
-    <h2><span class="icon">📋</span> Procedure</h2>
-    <ol class="steps-list">
-      <li>
-        <div class="step-content">
-          <h4>Connect the Source Drive via Write Blocker</h4>
-          <p>Attach the source USB or HDD through a hardware write blocker, or use FTK Imager's built-in software write protection. This ensures no data is written to the source during acquisition.</p>
-        </div>
-      </li>
-      <li>
-        <div class="step-content">
-          <h4>Launch FTK Imager</h4>
-          <p>Open FTK Imager as Administrator. Go to <strong>File → Create Disk Image</strong>.</p>
-        </div>
-      </li>
-      <li>
-        <div class="step-content">
-          <h4>Select Source Evidence Type</h4>
-          <p>Choose <strong>Physical Drive</strong> to image the entire drive at the physical sector level. Select the appropriate drive from the list (e.g., \\PHYSICALDRIVE1).</p>
-        </div>
-      </li>
-      <li>
-        <div class="step-content">
-          <h4>Configure Image Destination</h4>
-          <p>Click <strong>Add</strong> to set the output. Choose <strong>E01</strong> as the image type. Enter case details (Case Number, Evidence Number, Examiner, Notes) and set the destination folder on the evidence drive.</p>
-        </div>
-      </li>
-      <li>
-        <div class="step-content">
-          <h4>Enable Hash Verification</h4>
-          <p>Ensure <strong>Verify images after they are created</strong> and <strong>Create directory listings</strong> are checked. Select both MD5 and SHA-1 hash algorithms.</p>
-        </div>
-      </li>
-      <li>
-        <div class="step-content">
-          <h4>Start Imaging</h4>
-          <p>Click <strong>Start</strong>. Monitor the imaging progress. FTK Imager displays the elapsed time, sectors read, and estimated completion time.</p>
-        </div>
-      </li>
-      <li>
-        <div class="step-content">
-          <h4>Verify Hash Values</h4>
-          <p>Upon completion, FTK Imager computes and displays the source and image hash values. Confirm they match:</p>
-          <div class="code-block">Source MD5:  d41d8cd98f00b204e9800998ecf8427e
-Image  MD5:  d41d8cd98f00b204e9800998ecf8427e
-✓ Hash values match — Image verified.</div>
-        </div>
-      </li>
-      <li>
-        <div class="step-content">
-          <h4>Save the Image Report</h4>
-          <p>FTK Imager generates a <code>.txt</code> summary report. Save it alongside the E01 image as part of the chain of custody documentation.</p>
-        </div>
-      </li>
+  <div class="gs-section">
+    <div class="gs-heading">
+      <h2>Tools Required</h2>
+      <div class="gs-heading-line"></div>
+    </div>
+    <ul class="gs-list">
+      <li>FTK Imager (free download from AccessData)</li>
+      <li>Source drive or USB device to image</li>
+      <li>Destination drive with sufficient storage space</li>
+      <li>Write blocker (recommended for actual forensic work)</li>
+    </ul>
+  </div>
+
+  <div class="gs-section-alt">
+    <div class="gs-heading">
+      <h2>Procedure</h2>
+      <div class="gs-heading-line"></div>
+    </div>
+    <ol class="gs-steps">
+      <li>Download and install FTK Imager from the official website</li>
+      <li>Connect the source drive (USB or external HDD) to the computer</li>
+      <li>Launch FTK Imager as Administrator</li>
+      <li>Click File > Create Disk Image</li>
+      <li>Select the source type (Physical Drive, Logical Drive, or Image File)</li>
+      <li>Choose the source drive from the list</li>
+      <li>Select destination and image format (E01 recommended)</li>
+      <li>Enter case information: Case Number, Evidence Number, Examiner Name, Description</li>
+      <li>Choose compression level and fragment size if needed</li>
+      <li>Click Start to begin the imaging process</li>
+      <li>Wait for the process to complete - this may take time depending on drive size</li>
+      <li>Verify the hash values match between source and image</li>
     </ol>
   </div>
 
-  <div class="content-block">
-    <h2><span class="icon">🖼️</span> Screenshots</h2>
-    <div class="img-row">
-      <div class="img-placeholder"><div class="icon">🖼️</div>FTK Imager — Create Image Dialog</div>
-      <div class="img-placeholder"><div class="icon">🖼️</div>Imaging Progress Screen</div>
-      <div class="img-placeholder"><div class="icon">🖼️</div>Hash Verification Result</div>
+  <div class="gs-section">
+    <div class="gs-heading">
+      <h2>Screenshots</h2>
+      <div class="gs-heading-line"></div>
+    </div>
+    <div class="gs-image-row">
+      <div class="gs-image-block">
+        <div class="gs-image-placeholder">Screenshot 1</div>
+        <div class="gs-image-caption">FTK Imager main interface</div>
+      </div>
+      <div class="gs-image-block">
+        <div class="gs-image-placeholder">Screenshot 2</div>
+        <div class="gs-image-caption">Selecting source drive for imaging</div>
+      </div>
+    </div>
+    <div class="gs-image-row">
+      <div class="gs-image-block">
+        <div class="gs-image-placeholder">Screenshot 3</div>
+        <div class="gs-image-caption">Imaging in progress with hash calculation</div>
+      </div>
+      <div class="gs-image-block">
+        <div class="gs-image-placeholder">Screenshot 4</div>
+        <div class="gs-image-caption">Verification complete with matching hash values</div>
+      </div>
     </div>
   </div>
 
-  <div class="content-block">
-    <h2><span class="icon">📝</span> Observations &amp; Result</h2>
-    <p>The forensic image was created successfully in E01 format. The MD5 and SHA-1 hash values of the source drive and the resulting image were identical, confirming the integrity of the acquisition. The image file was accompanied by a verified case report suitable for chain-of-custody documentation.</p>
-    <p><strong>Result:</strong> A forensically sound disk image was successfully created using FTK Imager, with hash verification confirming that no data was modified during the acquisition process.</p>
+  <div class="gs-section-alt">
+    <div class="gs-heading">
+      <h2>Result</h2>
+      <div class="gs-heading-line"></div>
+    </div>
+    <p class="gs-text">
+      A forensic image of the storage device was successfully created using FTK Imager. The MD5 and SHA1 hash values of the created image matched the hash values of the original source drive, confirming that the image is an exact bit-by-bit copy. This forensic image can now be used for investigation without risking damage to the original evidence.
+    </p>
   </div>
 
-  <div class="exp-nav">
-    <a href="exp3.html">← Experiment 03</a>
-    <a href="exp5.html">Experiment 05 →</a>
+  <div class="gs-exp-nav">
+    <a href="exp3.html">← Experiment 3</a>
+    <a href="exp5.html">Experiment 5 →</a>
   </div>
 
 </div>
 
-<footer class="site-footer">
-  <p>Digital Forensics Laboratory &nbsp;·&nbsp; <strong>Jagadeesh P</strong> &nbsp;·&nbsp; Roll No: 2023000042 &nbsp;·&nbsp; GITAM University</p>
+<footer class="gs-footer">
+  <div class="gs-footer-bottom">
+    Jagadeesh P | Roll No: 2023000042 | GITAM University
+  </div>
 </footer>
 
 </body>

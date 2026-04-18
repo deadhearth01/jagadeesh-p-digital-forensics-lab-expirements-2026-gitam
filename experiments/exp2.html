@@ -1,151 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Exp 2 — Steganography via CMD | Jagadeesh P</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&family=Roboto:wght@400;500&family=Roboto+Mono&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="../style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Experiment 2 - Steganography</title>
+  <link rel="stylesheet" href="../style.css">
 </head>
 <body>
 
-<nav class="site-nav">
-  <div class="nav-inner">
-    <a href="../index.html" class="site-logo">
-      <div class="logo-icon">J</div>
-      <span class="logo-text">Jagadeesh P</span>
-    </a>
-    <ul class="nav-links">
-      <li><a href="../index.html">Home</a></li>
-      <li><a href="../index.html" class="active">Experiments</a></li>
-      <li><a href="../about.html">About</a></li>
+<header class="gs-header">
+  <div class="gs-menu-btn">☰</div>
+  <div class="gs-site-name">Digital Forensics Lab</div>
+  <nav class="gs-header-nav">
+    <a href="../index.html">Home</a>
+    <a href="../about.html">About</a>
+  </nav>
+</header>
+
+<div class="gs-breadcrumb">
+  <a href="../index.html">Home</a> / Experiment 2
+</div>
+
+<div class="gs-subpage-banner">
+  <div class="gs-exp-num">EXPERIMENT 2</div>
+  <h1>Study the steps for hiding and extracting any text file behind an image file/Audio file using Command Prompt</h1>
+</div>
+
+<div class="gs-content">
+
+  <div class="gs-section">
+    <div class="gs-heading">
+      <h2>Aim</h2>
+      <div class="gs-heading-line"></div>
+    </div>
+    <p class="gs-text">
+      To hide a text file inside an image using Windows Command Prompt and then extract it back.
+    </p>
+  </div>
+
+  <div class="gs-section-alt">
+    <div class="gs-heading">
+      <h2>Theory</h2>
+      <div class="gs-heading-line"></div>
+    </div>
+    <p class="gs-text">
+      Steganography is the practice of hiding secret information inside a normal looking file. The word comes from Greek words meaning "covered writing". Unlike encryption which makes data unreadable, steganography hides the fact that secret data exists at all.
+    </p>
+    <p class="gs-text">
+      In Windows, we can use the COPY /B command to combine two files at the binary level. When we combine a JPEG image with a ZIP file, the resulting file still opens as a normal image. But if we change the extension to .zip, we can extract the hidden content.
+    </p>
+    <p class="gs-text">
+      This works because image viewers read only until the end of image marker and ignore any extra data appended after it.
+    </p>
+  </div>
+
+  <div class="gs-section">
+    <div class="gs-heading">
+      <h2>Tools Required</h2>
+      <div class="gs-heading-line"></div>
+    </div>
+    <ul class="gs-list">
+      <li>Windows Command Prompt</li>
+      <li>WinRAR or 7-Zip</li>
+      <li>A JPEG image file</li>
+      <li>A text file with secret message</li>
     </ul>
   </div>
-</nav>
 
-<div class="breadcrumb">
-  <a href="../index.html">Home</a>
-  <span>/</span>
-  <span>Experiment 02 — Steganography via CMD</span>
-</div>
-
-<div class="exp-header">
-  <div class="exp-num">Experiment 02</div>
-  <h1>Hiding &amp; Extracting Text Behind an Image/Audio File Using Command Prompt</h1>
-</div>
-
-<div class="page-wrap">
-
-  <div class="content-block">
-    <h2><span class="icon">🎯</span> Aim</h2>
-    <p>To study the steps for hiding and extracting any text file behind an image file or audio file using Windows Command Prompt, and to understand steganographic concealment as a forensic artifact.</p>
-  </div>
-
-  <div class="content-block">
-    <h2><span class="icon">📖</span> Theory</h2>
-    <p><strong>Steganography</strong> is the practice of concealing information within a non-secret file or medium so that the existence of the hidden message is not apparent to an observer. Unlike cryptography, which makes data unreadable, steganography hides the very existence of the data.</p>
-    <p>In digital forensics, steganography is a significant concern because criminals often hide evidence inside seemingly innocent files such as holiday photos or music tracks. Forensic investigators must be able to both detect and extract such hidden content.</p>
-    <p>One of the simplest Windows-based steganography techniques exploits the <strong>COPY /B</strong> command, which performs a binary copy. By concatenating a ZIP archive (containing a text file) with a JPEG image, the resulting file is still viewable as an image but also contains the hidden archive. This works because JPEG viewers read only up to the end-of-image marker (<code>FF D9</code>) and ignore trailing data, while archive tools parse the ZIP end-of-central-directory signature.</p>
-    <div class="info-chips">
-      <span class="chip">Steganography</span>
-      <span class="chip">CMD / COPY /B</span>
-      <span class="chip">JPEG EOF</span>
-      <span class="chip">ZIP Concatenation</span>
-      <span class="chip">Anti-Forensics</span>
+  <div class="gs-section-alt">
+    <div class="gs-heading">
+      <h2>Procedure</h2>
+      <div class="gs-heading-line"></div>
     </div>
-  </div>
+    
+    <p class="gs-text"><strong>Part A - Hiding the file:</strong></p>
+    <ol class="gs-steps">
+      <li>Create a text file called secret.txt with your message</li>
+      <li>Compress secret.txt into secret.zip using WinRAR</li>
+      <li>Keep both image.jpg and secret.zip in the same folder</li>
+      <li>Open Command Prompt and navigate to that folder</li>
+      <li>Run: <code>copy /b image.jpg + secret.zip output.jpg</code></li>
+      <li>The output.jpg file now contains hidden data</li>
+    </ol>
 
-  <div class="content-block">
-    <h2><span class="icon">🛠️</span> Tools Required</h2>
-    <p><strong>Windows Command Prompt (cmd.exe)</strong> — Built-in Windows shell used to execute the binary copy command.</p>
-    <p><strong>WinRAR / 7-Zip</strong> — Archiving tools used to create the ZIP container for the hidden text file.</p>
-    <p><strong>A JPEG image</strong> — The carrier file used to conceal the hidden data.</p>
-    <p><strong>A text file</strong> — The secret message to be hidden.</p>
-  </div>
-
-  <div class="content-block">
-    <h2><span class="icon">📋</span> Procedure — Hiding Text in an Image</h2>
-    <ol class="steps-list">
-      <li>
-        <div class="step-content">
-          <h4>Prepare the Files</h4>
-          <p>Place <code>carrier.jpg</code> (the host image) and <code>secret.txt</code> (your hidden message) in the same folder, e.g., <code>C:\steg\</code>.</p>
-        </div>
-      </li>
-      <li>
-        <div class="step-content">
-          <h4>Archive the Text File</h4>
-          <p>Using WinRAR or 7-Zip, compress <code>secret.txt</code> into <code>secret.zip</code> and place it in the same directory.</p>
-        </div>
-      </li>
-      <li>
-        <div class="step-content">
-          <h4>Open Command Prompt as Administrator</h4>
-          <p>Press <kbd>Win + R</kbd>, type <code>cmd</code>, and run as Administrator. Navigate to the working directory:</p>
-          <div class="code-block">cd C:\steg</div>
-        </div>
-      </li>
-      <li>
-        <div class="step-content">
-          <h4>Concatenate Files Using COPY /B</h4>
-          <p>Run the binary copy command to merge the image and the ZIP archive:</p>
-          <div class="code-block">copy /b carrier.jpg + secret.zip output.jpg</div>
-          <p>The resulting <code>output.jpg</code> appears as a normal image but contains the hidden archive.</p>
-        </div>
-      </li>
+    <p class="gs-text"><strong>Part B - Extracting the file:</strong></p>
+    <ol class="gs-steps">
+      <li>Rename output.jpg to output.zip</li>
+      <li>Open output.zip with WinRAR or 7-Zip</li>
+      <li>Extract secret.txt from the archive</li>
+      <li>Open the text file to see your hidden message</li>
     </ol>
   </div>
 
-  <div class="content-block">
-    <h2><span class="icon">📋</span> Procedure — Extracting Hidden Text</h2>
-    <ol class="steps-list">
-      <li>
-        <div class="step-content">
-          <h4>Change the File Extension</h4>
-          <p>Rename <code>output.jpg</code> to <code>output.zip</code> in Command Prompt:</p>
-          <div class="code-block">ren output.jpg output.zip</div>
-        </div>
-      </li>
-      <li>
-        <div class="step-content">
-          <h4>Extract the Archive</h4>
-          <p>Open <code>output.zip</code> with WinRAR or 7-Zip. The <code>secret.txt</code> file will be extracted, revealing the hidden message.</p>
-        </div>
-      </li>
-      <li>
-        <div class="step-content">
-          <h4>Verify Content</h4>
-          <p>Open the extracted text file and confirm the hidden message is intact and unmodified.</p>
-        </div>
-      </li>
-    </ol>
-  </div>
-
-  <div class="content-block">
-    <h2><span class="icon">🖼️</span> Screenshots</h2>
-    <div class="img-row">
-      <div class="img-placeholder"><div class="icon">🖼️</div>CMD — COPY /B command</div>
-      <div class="img-placeholder"><div class="icon">🖼️</div>Output image appearing normal</div>
-      <div class="img-placeholder"><div class="icon">🖼️</div>Extracted secret.txt content</div>
+  <div class="gs-section">
+    <div class="gs-heading">
+      <h2>Screenshots</h2>
+      <div class="gs-heading-line"></div>
+    </div>
+    <div class="gs-image-row">
+      <div class="gs-image-block">
+        <div class="gs-image-placeholder">Screenshot 1</div>
+        <div class="gs-image-caption">Running COPY /B command in CMD</div>
+      </div>
+      <div class="gs-image-block">
+        <div class="gs-image-placeholder">Screenshot 2</div>
+        <div class="gs-image-caption">Output image opening normally</div>
+      </div>
+    </div>
+    <div class="gs-image-row">
+      <div class="gs-image-block">
+        <div class="gs-image-placeholder">Screenshot 3</div>
+        <div class="gs-image-caption">Extracting hidden ZIP content</div>
+      </div>
     </div>
   </div>
 
-  <div class="content-block">
-    <h2><span class="icon">📝</span> Observations &amp; Result</h2>
-    <p>The output JPEG file opened normally in image viewers without any visible difference from the original. The hidden ZIP archive was successfully extracted by renaming the file extension, and the original text message was recovered intact.</p>
-    <p><strong>Result:</strong> Text was successfully hidden within an image file using the Windows CMD binary copy technique, and subsequently extracted — demonstrating a simple steganographic method used in real-world anti-forensic scenarios.</p>
+  <div class="gs-section-alt">
+    <div class="gs-heading">
+      <h2>Result</h2>
+      <div class="gs-heading-line"></div>
+    </div>
+    <p class="gs-text">
+      The text file was successfully hidden inside the image file using the COPY /B command. The output image opened normally in any image viewer. By renaming the extension to .zip, the hidden text file was extracted successfully. This demonstrates a simple steganography technique that can be used to hide information.
+    </p>
   </div>
 
-  <div class="exp-nav">
-    <a href="exp1.html">← Experiment 01</a>
-    <a href="exp3.html">Experiment 03 →</a>
+  <div class="gs-exp-nav">
+    <a href="exp1.html">← Experiment 1</a>
+    <a href="exp3.html">Experiment 3 →</a>
   </div>
 
 </div>
 
-<footer class="site-footer">
-  <p>Digital Forensics Laboratory &nbsp;·&nbsp; <strong>Jagadeesh P</strong> &nbsp;·&nbsp; Roll No: 2023000042 &nbsp;·&nbsp; GITAM University</p>
+<footer class="gs-footer">
+  <div class="gs-footer-bottom">
+    Jagadeesh P | Roll No: 2023000042 | GITAM University
+  </div>
 </footer>
 
 </body>

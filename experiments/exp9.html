@@ -1,160 +1,164 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Exp 9 — Sysinternals for Process Monitoring | Jagadeesh P</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&family=Roboto:wght@400;500&family=Roboto+Mono&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="../style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Experiment 9 - Sysinternals Tools</title>
+  <link rel="stylesheet" href="../style.css">
 </head>
 <body>
 
-<nav class="site-nav">
-  <div class="nav-inner">
-    <a href="../index.html" class="site-logo">
-      <div class="logo-icon">J</div>
-      <span class="logo-text">Jagadeesh P</span>
-    </a>
-    <ul class="nav-links">
-      <li><a href="../index.html">Home</a></li>
-      <li><a href="../index.html" class="active">Experiments</a></li>
-      <li><a href="../about.html">About</a></li>
-    </ul>
-  </div>
-</nav>
+<header class="gs-header">
+  <div class="gs-menu-btn">☰</div>
+  <div class="gs-site-name">Digital Forensics Lab</div>
+  <nav class="gs-header-nav">
+    <a href="../index.html">Home</a>
+    <a href="../about.html">About</a>
+  </nav>
+</header>
 
-<div class="breadcrumb">
-  <a href="../index.html">Home</a>
-  <span>/</span>
-  <span>Experiment 09 — Sysinternals for Process Monitoring</span>
+<div class="gs-breadcrumb">
+  <a href="../index.html">Home</a> / Experiment 9
 </div>
 
-<div class="exp-header">
-  <div class="exp-num">Experiment 09</div>
-  <h1>Using the Sysinternals Suite for Network Tracking and Process Monitoring</h1>
+<div class="gs-subpage-banner">
+  <div class="gs-exp-num">EXPERIMENT 9</div>
+  <h1>Using the Sysinternals tool for network tracking and process monitoring</h1>
 </div>
 
-<div class="page-wrap">
+<div class="gs-content">
 
-  <div class="content-block">
-    <h2><span class="icon">🎯</span> Aim</h2>
-    <p>To use the Microsoft Sysinternals suite — specifically Process Monitor (Procmon), Process Explorer, and TCPView — to monitor running processes, track system activity, and observe network connections in real time for forensic investigation.</p>
-  </div>
-
-  <div class="content-block">
-    <h2><span class="icon">📖</span> Theory</h2>
-    <p>The <strong>Sysinternals Suite</strong> is a collection of advanced Windows system utilities developed by Mark Russinovich and Bryce Cogswell, now maintained by Microsoft. It is an indispensable toolkit for Windows forensic investigators, incident responders, and malware analysts.</p>
-    <p>Key tools in the Sysinternals suite:</p>
-    <ul style="margin-left:20px; color:#5f6368; font-size:15px; line-height:2;">
-      <li><strong>Process Monitor (Procmon)</strong> — Monitors file system, registry, network, and process/thread activity in real time with extensive filtering capabilities</li>
-      <li><strong>Process Explorer</strong> — An advanced task manager that shows detailed information about running processes, including DLLs loaded, parent-child relationships, and VirusTotal integration</li>
-      <li><strong>TCPView</strong> — Displays all active TCP and UDP endpoints with the associated process name and PID</li>
-      <li><strong>Autoruns</strong> — Shows all programs configured to run at startup — critical for detecting malware persistence</li>
-      <li><strong>PsTools</strong> — Command-line tools for managing processes and services on local or remote machines</li>
-    </ul>
-    <p>In a forensic context, Sysinternals tools are used during <strong>live response</strong> investigations to capture volatile data — running processes, active network connections, registry changes, and file system activity — that would be lost after a system reboot.</p>
-    <p>Process Monitor's ability to record <strong>every</strong> file, registry, and network event (with timestamps, call stacks, and process details) makes it uniquely powerful for tracking malware behavior and identifying indicators of compromise (IOCs).</p>
-    <div class="info-chips">
-      <span class="chip">Sysinternals</span>
-      <span class="chip">Process Monitor</span>
-      <span class="chip">TCPView</span>
-      <span class="chip">Live Response</span>
-      <span class="chip">Malware Analysis</span>
+  <div class="gs-section">
+    <div class="gs-heading">
+      <h2>Aim</h2>
+      <div class="gs-heading-line"></div>
     </div>
+    <p class="gs-text">
+      To use Microsoft Sysinternals tools for monitoring system processes, network connections, and detecting suspicious activity on a Windows system.
+    </p>
   </div>
 
-  <div class="content-block">
-    <h2><span class="icon">🛠️</span> Tools Required</h2>
-    <p><strong>Sysinternals Suite</strong> — Downloadable from Microsoft (live.sysinternals.com or as a ZIP). Key utilities: <code>procmon.exe</code>, <code>procexp.exe</code>, <code>tcpview.exe</code>, <code>autoruns.exe</code>.</p>
-    <p><strong>Windows OS (7/10/11)</strong> — The environment in which the tools operate.</p>
-    <p><strong>Administrator privileges</strong> — Required for kernel-level process monitoring.</p>
+  <div class="gs-section-alt">
+    <div class="gs-heading">
+      <h2>Theory</h2>
+      <div class="gs-heading-line"></div>
+    </div>
+    <p class="gs-text">
+      Sysinternals is a suite of advanced system utilities developed by Mark Russinovich, now owned by Microsoft. These tools provide deep visibility into Windows systems and are widely used by IT professionals and forensic investigators.
+    </p>
+    <p class="gs-text">
+      Process Monitor (ProcMon) combines two older tools - Filemon and Regmon. It shows real-time file system, Registry, and process/thread activity. This is useful for troubleshooting and detecting malware that accesses sensitive files or registry keys.
+    </p>
+    <p class="gs-text">
+      Process Explorer is an advanced task manager that shows detailed information about running processes including their hierarchy, loaded DLLs, handles, and network connections. TCPView shows all TCP and UDP endpoints on the system with the owning process.
+    </p>
+    <p class="gs-text">
+      Autoruns shows all programs configured to run at system startup. Malware often adds itself to startup locations, making this tool valuable for detecting persistent threats.
+    </p>
   </div>
 
-  <div class="content-block">
-    <h2><span class="icon">📋</span> Procedure — Process Monitor</h2>
-    <ol class="steps-list">
-      <li>
-        <div class="step-content">
-          <h4>Launch Process Monitor as Administrator</h4>
-          <p>Right-click <code>Procmon.exe</code> and choose "Run as Administrator". Accept the EULA. Procmon immediately starts capturing all system events.</p>
-        </div>
-      </li>
-      <li>
-        <div class="step-content">
-          <h4>Apply a Filter to Focus on a Process</h4>
-          <p>Go to <strong>Filter → Filter (Ctrl+L)</strong>. Add a filter: <em>Process Name → is → chrome.exe → Include</em>. Click Add, then OK. Now only Chrome's activity is shown.</p>
-        </div>
-      </li>
-      <li>
-        <div class="step-content">
-          <h4>Observe File and Registry Activity</h4>
-          <p>Open Chrome and navigate to a website. Observe Procmon capturing file reads/writes, registry accesses, and network connections generated by Chrome. Note the file paths and registry keys accessed.</p>
-        </div>
-      </li>
-      <li>
-        <div class="step-content">
-          <h4>Save the Procmon Log</h4>
-          <p>Stop capture (Ctrl+E) and save the log as a <code>.PML</code> file for later analysis. This log can be loaded offline for investigation.</p>
-        </div>
-      </li>
+  <div class="gs-section">
+    <div class="gs-heading">
+      <h2>Tools Required</h2>
+      <div class="gs-heading-line"></div>
+    </div>
+    <ul class="gs-list">
+      <li>Process Monitor (ProcMon)</li>
+      <li>Process Explorer</li>
+      <li>TCPView</li>
+      <li>Autoruns</li>
+      <li>All available free from Microsoft Sysinternals website</li>
+    </ul>
+  </div>
+
+  <div class="gs-section-alt">
+    <div class="gs-heading">
+      <h2>Procedure</h2>
+      <div class="gs-heading-line"></div>
+    </div>
+    
+    <p class="gs-text"><strong>Part A - Process Explorer:</strong></p>
+    <ol class="gs-steps">
+      <li>Download and run Process Explorer (procexp.exe)</li>
+      <li>Observe the process tree showing parent-child relationships</li>
+      <li>Click on any process to see detailed information in the lower pane</li>
+      <li>Use View > Show Lower Pane to see DLLs and handles</li>
+      <li>Right-click suspicious process and select "Check VirusTotal" to scan online</li>
+      <li>Look for processes with no icon, no company name, or unusual locations</li>
+    </ol>
+
+    <p class="gs-text"><strong>Part B - TCPView for Network Monitoring:</strong></p>
+    <ol class="gs-steps">
+      <li>Download and run TCPView</li>
+      <li>Observe all active network connections</li>
+      <li>Note the Process, Local Address, Remote Address, and State columns</li>
+      <li>Look for connections to unusual or foreign IP addresses</li>
+      <li>Right-click to close suspicious connections or end the process</li>
+    </ol>
+
+    <p class="gs-text"><strong>Part C - Process Monitor:</strong></p>
+    <ol class="gs-steps">
+      <li>Download and run Process Monitor as Administrator</li>
+      <li>Use Filter (Ctrl+L) to focus on specific processes or operations</li>
+      <li>Monitor file system and registry activity in real-time</li>
+      <li>Save the log for later analysis</li>
     </ol>
   </div>
 
-  <div class="content-block">
-    <h2><span class="icon">📋</span> Procedure — TCPView</h2>
-    <ol class="steps-list">
-      <li>
-        <div class="step-content">
-          <h4>Launch TCPView as Administrator</h4>
-          <p>Run <code>tcpview.exe</code> as Administrator. The tool immediately lists all active TCP/UDP connections with process name, PID, local address, remote address, and state.</p>
-        </div>
-      </li>
-      <li>
-        <div class="step-content">
-          <h4>Identify Active Connections</h4>
-          <p>Look for <code>ESTABLISHED</code> TCP connections. Note which processes are communicating with external IP addresses. Connections to unknown remote IPs may indicate malware C2 communications.</p>
-        </div>
-      </li>
-      <li>
-        <div class="step-content">
-          <h4>Kill a Suspicious Connection</h4>
-          <p>Right-click any suspicious connection and select <strong>Close Connection</strong>. This terminates the TCP session without ending the process.</p>
-        </div>
-      </li>
-      <li>
-        <div class="step-content">
-          <h4>Document All Active Connections</h4>
-          <p>Go to <strong>File → Save</strong> to export all active connections as a <code>.txt</code> file for the forensic report.</p>
-        </div>
-      </li>
-    </ol>
-  </div>
-
-  <div class="content-block">
-    <h2><span class="icon">🖼️</span> Screenshots</h2>
-    <div class="img-row">
-      <div class="img-placeholder"><div class="icon">🖼️</div>Process Monitor — Event Log</div>
-      <div class="img-placeholder"><div class="icon">🖼️</div>TCPView — Active Connections</div>
-      <div class="img-placeholder"><div class="icon">🖼️</div>Process Explorer — Process Tree</div>
+  <div class="gs-section">
+    <div class="gs-heading">
+      <h2>Screenshots</h2>
+      <div class="gs-heading-line"></div>
+    </div>
+    <div class="gs-image-row">
+      <div class="gs-image-block">
+        <div class="gs-image-placeholder">Screenshot 1</div>
+        <div class="gs-image-caption">Process Explorer showing process tree</div>
+      </div>
+      <div class="gs-image-block">
+        <div class="gs-image-placeholder">Screenshot 2</div>
+        <div class="gs-image-caption">Process details with DLLs and handles</div>
+      </div>
+    </div>
+    <div class="gs-image-row">
+      <div class="gs-image-block">
+        <div class="gs-image-placeholder">Screenshot 3</div>
+        <div class="gs-image-caption">TCPView showing active connections</div>
+      </div>
+      <div class="gs-image-block">
+        <div class="gs-image-placeholder">Screenshot 4</div>
+        <div class="gs-image-caption">Process Monitor capturing system activity</div>
+      </div>
+    </div>
+    <div class="gs-image-row">
+      <div class="gs-image-block">
+        <div class="gs-image-placeholder">Screenshot 5</div>
+        <div class="gs-image-caption">Autoruns showing startup programs</div>
+      </div>
     </div>
   </div>
 
-  <div class="content-block">
-    <h2><span class="icon">📝</span> Observations &amp; Result</h2>
-    <p>Process Monitor recorded all file system, registry, and network events generated by the monitored process. TCPView revealed all active network connections along with the owning process, enabling identification of any unauthorized outbound connections. Process Explorer provided a detailed process tree showing parent-child relationships and loaded DLLs, which is essential for detecting process injection and malware masquerading as legitimate processes.</p>
-    <p><strong>Result:</strong> The Sysinternals suite was used effectively for live system forensics — monitoring process activity, network connections, and system events in real time, demonstrating its critical role in incident response and forensic investigation.</p>
+  <div class="gs-section-alt">
+    <div class="gs-heading">
+      <h2>Result</h2>
+      <div class="gs-heading-line"></div>
+    </div>
+    <p class="gs-text">
+      The Sysinternals tools were successfully used to monitor system processes and network activity. Process Explorer provided detailed visibility into running processes and their resource usage. TCPView revealed all active network connections and their associated processes. Process Monitor captured real-time system activity for analysis. These tools are essential for forensic investigation and malware detection on Windows systems.
+    </p>
   </div>
 
-  <div class="exp-nav">
-    <a href="exp8.html">← Experiment 08</a>
+  <div class="gs-exp-nav">
+    <a href="exp8.html">← Experiment 8</a>
     <a href="../index.html">Back to Home →</a>
   </div>
 
 </div>
 
-<footer class="site-footer">
-  <p>Digital Forensics Laboratory &nbsp;·&nbsp; <strong>Jagadeesh P</strong> &nbsp;·&nbsp; Roll No: 2023000042 &nbsp;·&nbsp; GITAM University</p>
+<footer class="gs-footer">
+  <div class="gs-footer-bottom">
+    Jagadeesh P | Roll No: 2023000042 | GITAM University
+  </div>
 </footer>
 
 </body>

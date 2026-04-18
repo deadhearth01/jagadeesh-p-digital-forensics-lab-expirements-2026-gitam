@@ -1,152 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Exp 5 — Email Evidence Collection | Jagadeesh P</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&family=Roboto:wght@400;500&family=Roboto+Mono&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="../style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Experiment 5 - Email Evidence Collection</title>
+  <link rel="stylesheet" href="../style.css">
 </head>
 <body>
 
-<nav class="site-nav">
-  <div class="nav-inner">
-    <a href="../index.html" class="site-logo">
-      <div class="logo-icon">J</div>
-      <span class="logo-text">Jagadeesh P</span>
-    </a>
-    <ul class="nav-links">
-      <li><a href="../index.html">Home</a></li>
-      <li><a href="../index.html" class="active">Experiments</a></li>
-      <li><a href="../about.html">About</a></li>
-    </ul>
-  </div>
-</nav>
+<header class="gs-header">
+  <div class="gs-menu-btn">☰</div>
+  <div class="gs-site-name">Digital Forensics Lab</div>
+  <nav class="gs-header-nav">
+    <a href="../index.html">Home</a>
+    <a href="../about.html">About</a>
+  </nav>
+</header>
 
-<div class="breadcrumb">
-  <a href="../index.html">Home</a>
-  <span>/</span>
-  <span>Experiment 05 — Email Evidence Collection</span>
+<div class="gs-breadcrumb">
+  <a href="../index.html">Home</a> / Experiment 5
 </div>
 
-<div class="exp-header">
-  <div class="exp-num">Experiment 05</div>
-  <h1>Collection of Email Evidence in the Victim's PC</h1>
+<div class="gs-subpage-banner">
+  <div class="gs-exp-num">EXPERIMENT 5</div>
+  <h1>Collection of the Email evidence in the victim's PC</h1>
 </div>
 
-<div class="page-wrap">
+<div class="gs-content">
 
-  <div class="content-block">
-    <h2><span class="icon">🎯</span> Aim</h2>
-    <p>To collect, preserve, and analyze email evidence from a victim's computer, including email headers, body content, attachments, and metadata, following proper forensic procedures.</p>
-  </div>
-
-  <div class="content-block">
-    <h2><span class="icon">📖</span> Theory</h2>
-    <p>Email forensics is the study and examination of email content, email headers, and email communication patterns to identify evidence of malicious activity, fraud, harassment, data exfiltration, or other crimes. Emails are one of the most common forms of digital evidence in cybercrime cases.</p>
-    <p><strong>Email Header Analysis</strong> is particularly valuable. Every email carries a header that records the path it took through mail servers. Key header fields include:</p>
-    <ul style="margin-left:20px; color:#5f6368; font-size:15px; line-height:2;">
-      <li><strong>From / To / CC / BCC</strong> — Sender and recipient addresses</li>
-      <li><strong>Date</strong> — Timestamp of the email</li>
-      <li><strong>Message-ID</strong> — Unique identifier assigned by the sending mail server</li>
-      <li><strong>Received</strong> — Chain of mail servers through which the email passed, with timestamps</li>
-      <li><strong>X-Originating-IP</strong> — The IP address of the original sender's device</li>
-      <li><strong>MIME-Version / Content-Type</strong> — Email encoding and attachment metadata</li>
-    </ul>
-    <p>Email clients such as Microsoft Outlook store messages in <strong>PST (Personal Storage Table)</strong> or <strong>OST (Offline Storage Table)</strong> files. Thunderbird uses <strong>MBOX</strong> format. These files can be analyzed using forensic tools to retrieve all emails, including deleted messages.</p>
-    <div class="info-chips">
-      <span class="chip">Email Headers</span>
-      <span class="chip">PST / MBOX</span>
-      <span class="chip">IP Tracing</span>
-      <span class="chip">Mail Forensics</span>
-      <span class="chip">Autopsy</span>
+  <div class="gs-section">
+    <div class="gs-heading">
+      <h2>Aim</h2>
+      <div class="gs-heading-line"></div>
     </div>
+    <p class="gs-text">
+      To collect and preserve email evidence from a computer system for forensic analysis and investigation.
+    </p>
   </div>
 
-  <div class="content-block">
-    <h2><span class="icon">🛠️</span> Tools Required</h2>
-    <p><strong>Autopsy</strong> — Used to parse PST/OST files from a forensic image and recover email artifacts.</p>
-    <p><strong>Aid4Mail / MailXaminer</strong> — Dedicated email forensics tools for parsing and reporting on email databases.</p>
-    <p><strong>MXToolbox Header Analyzer</strong> — Web-based email header analysis tool.</p>
-    <p><strong>Microsoft Outlook / Thunderbird</strong> — Email clients whose storage files are analyzed.</p>
+  <div class="gs-section-alt">
+    <div class="gs-heading">
+      <h2>Theory</h2>
+      <div class="gs-heading-line"></div>
+    </div>
+    <p class="gs-text">
+      Email forensics involves the examination of email messages and their metadata to gather evidence for legal proceedings. Emails contain valuable information including sender and recipient addresses, timestamps, IP addresses, message content, and attachments.
+    </p>
+    <p class="gs-text">
+      Email clients like Microsoft Outlook store messages in specific file formats. Outlook uses PST (Personal Storage Table) files to store emails, contacts, and calendar items locally. These PST files can be analyzed to recover deleted emails and examine communication patterns.
+    </p>
+    <p class="gs-text">
+      Email headers contain technical information about how the message was routed across servers. This includes the originating IP address, mail servers involved, timestamps at each hop, and authentication results. Analyzing headers can help identify spoofed emails or trace the true sender.
+    </p>
   </div>
 
-  <div class="content-block">
-    <h2><span class="icon">📋</span> Procedure</h2>
-    <ol class="steps-list">
-      <li>
-        <div class="step-content">
-          <h4>Locate Email Storage Files</h4>
-          <p>On the victim's PC (or forensic image), locate email database files. For Outlook, the default paths are:<br>
-          <code>C:\Users\[User]\Documents\Outlook Files\*.pst</code><br>
-          <code>C:\Users\[User]\AppData\Local\Microsoft\Outlook\*.ost</code></p>
-        </div>
-      </li>
-      <li>
-        <div class="step-content">
-          <h4>Create a Forensic Image (If Not Already Done)</h4>
-          <p>Use FTK Imager to create a bit-for-bit image of the drive (refer to Experiment 04) before examining email files, ensuring evidence preservation.</p>
-        </div>
-      </li>
-      <li>
-        <div class="step-content">
-          <h4>Load PST File into Autopsy</h4>
-          <p>In Autopsy, add the forensic image as a data source. Navigate to <strong>Email Messages</strong> in the results tree. Autopsy will parse the PST/OST and list all emails.</p>
-        </div>
-      </li>
-      <li>
-        <div class="step-content">
-          <h4>Examine Email Headers</h4>
-          <p>Select a suspicious email and view its full raw header. Identify the <code>X-Originating-IP</code> field to trace the sender's IP address.</p>
-        </div>
-      </li>
-      <li>
-        <div class="step-content">
-          <h4>Trace IP Address</h4>
-          <p>Use an IP geolocation service or <code>whois</code> to resolve the originating IP to a geographic location and ISP:</p>
-          <div class="code-block">whois 203.0.113.45</div>
-        </div>
-      </li>
-      <li>
-        <div class="step-content">
-          <h4>Extract Attachments</h4>
-          <p>In Autopsy, navigate to <strong>Attachments</strong> under the email module. Extract and hash all attachments. Check file hashes against known malware databases (VirusTotal).</p>
-        </div>
-      </li>
-      <li>
-        <div class="step-content">
-          <h4>Document and Report</h4>
-          <p>Export a full email evidence report from Autopsy. Record all findings including sender IP, timestamps, email body excerpts, and attachment hashes in the forensic report.</p>
-        </div>
-      </li>
+  <div class="gs-section">
+    <div class="gs-heading">
+      <h2>Tools Required</h2>
+      <div class="gs-heading-line"></div>
+    </div>
+    <ul class="gs-list">
+      <li>Microsoft Outlook (for accessing PST files)</li>
+      <li>Kernel Outlook PST Viewer (free PST viewer)</li>
+      <li>Email header analyzer (online tools available)</li>
+      <li>FTK Imager (for creating forensic copy of email files)</li>
+    </ul>
+  </div>
+
+  <div class="gs-section-alt">
+    <div class="gs-heading">
+      <h2>Procedure</h2>
+      <div class="gs-heading-line"></div>
+    </div>
+    <ol class="gs-steps">
+      <li>Locate the email data files on the system. For Outlook, check: C:\Users\[Username]\Documents\Outlook Files\</li>
+      <li>Create a forensic copy of the PST/OST files before analysis</li>
+      <li>Open the PST file using Kernel Outlook PST Viewer or similar tool</li>
+      <li>Browse through the folder structure: Inbox, Sent Items, Deleted Items, etc.</li>
+      <li>Identify relevant emails based on date range, sender, or keywords</li>
+      <li>For each important email, view the full header information</li>
+      <li>Copy the email header and analyze using an online header analyzer</li>
+      <li>Document findings including sender IP, routing information, and timestamps</li>
+      <li>Export relevant emails in a standard format (EML or MSG) for evidence</li>
+      <li>Create a report summarizing the email evidence found</li>
     </ol>
   </div>
 
-  <div class="content-block">
-    <h2><span class="icon">🖼️</span> Screenshots</h2>
-    <div class="img-row">
-      <div class="img-placeholder"><div class="icon">🖼️</div>Autopsy — Email Messages Tree</div>
-      <div class="img-placeholder"><div class="icon">🖼️</div>Raw Email Header View</div>
-      <div class="img-placeholder"><div class="icon">🖼️</div>IP Geolocation Result</div>
+  <div class="gs-section">
+    <div class="gs-heading">
+      <h2>Screenshots</h2>
+      <div class="gs-heading-line"></div>
+    </div>
+    <div class="gs-image-row">
+      <div class="gs-image-block">
+        <div class="gs-image-placeholder">Screenshot 1</div>
+        <div class="gs-image-caption">Locating Outlook PST files on the system</div>
+      </div>
+      <div class="gs-image-block">
+        <div class="gs-image-placeholder">Screenshot 2</div>
+        <div class="gs-image-caption">Opening PST file in email viewer</div>
+      </div>
+    </div>
+    <div class="gs-image-row">
+      <div class="gs-image-block">
+        <div class="gs-image-placeholder">Screenshot 3</div>
+        <div class="gs-image-caption">Viewing email header information</div>
+      </div>
+      <div class="gs-image-block">
+        <div class="gs-image-placeholder">Screenshot 4</div>
+        <div class="gs-image-caption">Header analysis showing routing details</div>
+      </div>
     </div>
   </div>
 
-  <div class="content-block">
-    <h2><span class="icon">📝</span> Observations &amp; Result</h2>
-    <p>Email artifacts were successfully recovered from the PST file using Autopsy. Header analysis revealed the originating IP address, which was geolocated to a specific region. Attachments were extracted and their MD5 hashes were recorded. The complete email thread, including sent and deleted items, was recovered and documented.</p>
-    <p><strong>Result:</strong> Email evidence was successfully collected and analyzed from the victim's PC, demonstrating the process of email forensics including header analysis, IP tracing, and attachment examination.</p>
+  <div class="gs-section-alt">
+    <div class="gs-heading">
+      <h2>Result</h2>
+      <div class="gs-heading-line"></div>
+    </div>
+    <p class="gs-text">
+      Email evidence was successfully collected from the system by locating and analyzing the Outlook PST files. The email headers were examined to identify sender information, routing paths, and timestamps. This process demonstrates how email communications can be preserved and analyzed for forensic investigation purposes.
+    </p>
   </div>
 
-  <div class="exp-nav">
-    <a href="exp4.html">← Experiment 04</a>
-    <a href="exp6.html">Experiment 06 →</a>
+  <div class="gs-exp-nav">
+    <a href="exp4.html">← Experiment 4</a>
+    <a href="exp6.html">Experiment 6 →</a>
   </div>
 
 </div>
 
-<footer class="site-footer">
-  <p>Digital Forensics Laboratory &nbsp;·&nbsp; <strong>Jagadeesh P</strong> &nbsp;·&nbsp; Roll No: 2023000042 &nbsp;·&nbsp; GITAM University</p>
+<footer class="gs-footer">
+  <div class="gs-footer-bottom">
+    Jagadeesh P | Roll No: 2023000042 | GITAM University
+  </div>
 </footer>
 
 </body>
