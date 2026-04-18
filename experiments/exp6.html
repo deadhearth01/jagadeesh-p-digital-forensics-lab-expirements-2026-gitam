@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Exp 6 — Browser Artefacts | Jagadeesh P</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&family=Roboto:wght@400;500&family=Roboto+Mono&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="../index.html" class="site-logo">
+      <div class="logo-icon">J</div>
+      <span class="logo-text">Jagadeesh P</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="../index.html" class="active">Experiments</a></li>
+      <li><a href="../about.html">About</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="breadcrumb">
+  <a href="../index.html">Home</a>
+  <span>/</span>
+  <span>Experiment 06 — Browser Artefact Extraction</span>
+</div>
+
+<div class="exp-header">
+  <div class="exp-num">Experiment 06</div>
+  <h1>Extraction of Browser Artefacts</h1>
+</div>
+
+<div class="page-wrap">
+
+  <div class="content-block">
+    <h2><span class="icon">🎯</span> Aim</h2>
+    <p>To extract and analyze browser artifacts — including browsing history, cookies, cache files, saved passwords, and download records — from major web browsers for forensic investigation.</p>
+  </div>
+
+  <div class="content-block">
+    <h2><span class="icon">📖</span> Theory</h2>
+    <p>Web browsers store a significant amount of user activity data locally on the system. These <strong>browser artifacts</strong> are valuable forensic evidence that can reveal websites visited, search queries, downloaded files, form data, and even login credentials.</p>
+    <p>Key browser artifact types and their storage locations on Windows:</p>
+    <ul style="margin-left:20px; color:#5f6368; font-size:15px; line-height:2;">
+      <li><strong>History</strong> — URLs and visit timestamps stored in SQLite databases (<code>History</code> file in Chrome)</li>
+      <li><strong>Cookies</strong> — Session tokens and tracking cookies (<code>Cookies</code> SQLite DB)</li>
+      <li><strong>Cache</strong> — Locally stored web page content for faster loading</li>
+      <li><strong>Downloads</strong> — Record of all files downloaded (<code>History</code> DB, downloads table)</li>
+      <li><strong>Saved Passwords</strong> — Encrypted credentials stored in <code>Login Data</code> (Chrome) or <code>logins.json</code> (Firefox)</li>
+      <li><strong>Bookmarks</strong> — User-saved URLs indicating sites of interest</li>
+      <li><strong>Search Terms</strong> — Queries entered into the browser's address bar (omnibox)</li>
+    </ul>
+    <p>Chrome and Edge store artifacts in SQLite databases under <code>%LOCALAPPDATA%\Google\Chrome\User Data\Default\</code>. Firefox stores data in <code>%APPDATA%\Mozilla\Firefox\Profiles\[profile]\</code>. These files can be parsed even when a user has cleared their browser history, as forensic tools can recover deleted SQLite records.</p>
+    <div class="info-chips">
+      <span class="chip">SQLite Forensics</span>
+      <span class="chip">Chrome / Firefox</span>
+      <span class="chip">Browsing History</span>
+      <span class="chip">Cookies</span>
+      <span class="chip">BrowsingHistoryView</span>
+    </div>
+  </div>
+
+  <div class="content-block">
+    <h2><span class="icon">🛠️</span> Tools Required</h2>
+    <p><strong>BrowsingHistoryView (NirSoft)</strong> — Aggregates browsing history from Chrome, Firefox, Edge, and IE into a single view.</p>
+    <p><strong>DB Browser for SQLite</strong> — Opens and queries SQLite database files directly.</p>
+    <p><strong>Hindsight</strong> — Chrome / Chromium artifact parser that reconstructs browsing sessions.</p>
+    <p><strong>Autopsy</strong> — Can automatically parse browser artifacts from a forensic image.</p>
+  </div>
+
+  <div class="content-block">
+    <h2><span class="icon">📋</span> Procedure</h2>
+    <ol class="steps-list">
+      <li>
+        <div class="step-content">
+          <h4>Locate Browser Profile Directories</h4>
+          <p>Open File Explorer and navigate to the Chrome profile directory:<br>
+          <code>C:\Users\[User]\AppData\Local\Google\Chrome\User Data\Default\</code><br>
+          Note the files: <code>History</code>, <code>Cookies</code>, <code>Login Data</code>, <code>Bookmarks</code>.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <h4>Copy Artifact Files</h4>
+          <p>Copy the SQLite database files to a separate working directory. Do not open them while Chrome is running as the browser locks the files.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <h4>Open History DB in SQLite Browser</h4>
+          <p>Open <code>History</code> in DB Browser for SQLite. Run the following query to view recent visits:</p>
+          <div class="code-block">SELECT url, title, visit_count,
+  datetime(last_visit_time/1000000-11644473600, 'unixepoch') AS last_visit
+FROM urls
+ORDER BY last_visit_time DESC
+LIMIT 50;</div>
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <h4>Run BrowsingHistoryView</h4>
+          <p>Launch BrowsingHistoryView, configure it to scan all browsers, and click OK. The tool aggregates history from all installed browsers into a sortable table. Export as CSV.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <h4>Extract Download Records</h4>
+          <p>In DB Browser, switch to the <code>downloads</code> table in the <code>History</code> DB. Note file names, target paths, start times, and referrer URLs.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <h4>Analyse Cookies</h4>
+          <p>Open <code>Cookies</code> in DB Browser. Query the cookies table to identify session tokens, third-party trackers, and logged-in services.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <h4>Run Hindsight for Full Session Reconstruction</h4>
+          <p>Run Hindsight against the Chrome profile directory to produce a comprehensive HTML report including page transitions and search terms.</p>
+        </div>
+      </li>
+    </ol>
+  </div>
+
+  <div class="content-block">
+    <h2><span class="icon">🖼️</span> Screenshots</h2>
+    <div class="img-row">
+      <div class="img-placeholder"><div class="icon">🖼️</div>BrowsingHistoryView Output</div>
+      <div class="img-placeholder"><div class="icon">🖼️</div>SQLite History Query Results</div>
+      <div class="img-placeholder"><div class="icon">🖼️</div>Download Records Table</div>
+    </div>
+  </div>
+
+  <div class="content-block">
+    <h2><span class="icon">📝</span> Observations &amp; Result</h2>
+    <p>Browser artifacts were successfully extracted from Chrome's SQLite databases. The history database revealed all recently visited URLs with timestamps. Download records showed file names, download paths, and source URLs. BrowsingHistoryView consolidated history from multiple browsers. Hindsight produced a detailed timeline reconstruction of the user's browsing session.</p>
+    <p><strong>Result:</strong> Browser artifacts were successfully extracted and analyzed, providing a comprehensive view of the user's online activity — demonstrating the forensic value of browser artifact analysis.</p>
+  </div>
+
+  <div class="exp-nav">
+    <a href="exp5.html">← Experiment 05</a>
+    <a href="exp7.html">Experiment 07 →</a>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  <p>Digital Forensics Laboratory &nbsp;·&nbsp; <strong>Jagadeesh P</strong> &nbsp;·&nbsp; Roll No: 2023000042 &nbsp;·&nbsp; GITAM University</p>
+</footer>
+
+</body>
+</html>

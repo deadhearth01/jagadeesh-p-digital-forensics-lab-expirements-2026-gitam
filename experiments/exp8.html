@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Exp 8 — Wireshark Network Analysis | Jagadeesh P</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&family=Roboto:wght@400;500&family=Roboto+Mono&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="../index.html" class="site-logo">
+      <div class="logo-icon">J</div>
+      <span class="logo-text">Jagadeesh P</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="../index.html" class="active">Experiments</a></li>
+      <li><a href="../about.html">About</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="breadcrumb">
+  <a href="../index.html">Home</a>
+  <span>/</span>
+  <span>Experiment 08 — Wireshark Network Analysis</span>
+</div>
+
+<div class="exp-header">
+  <div class="exp-num">Experiment 08</div>
+  <h1>Usage of the Wireshark Tool for Network Packet Analysis</h1>
+</div>
+
+<div class="page-wrap">
+
+  <div class="content-block">
+    <h2><span class="icon">🎯</span> Aim</h2>
+    <p>To capture and analyze live network packets using Wireshark, apply display filters to isolate specific traffic, and identify forensic evidence within network communication data.</p>
+  </div>
+
+  <div class="content-block">
+    <h2><span class="icon">📖</span> Theory</h2>
+    <p><strong>Wireshark</strong> is the world's most widely used network protocol analyzer. It lets you capture and interactively browse the traffic running on a computer network. It is used by network engineers, security professionals, and forensic investigators to diagnose network problems and detect malicious activity.</p>
+    <p>Wireshark captures packets at the Data Link Layer (Layer 2) using the system's network interface in <strong>promiscuous mode</strong>, allowing it to capture all packets on the network segment, not just those addressed to the local machine.</p>
+    <p>Key concepts in Wireshark forensics:</p>
+    <ul style="margin-left:20px; color:#5f6368; font-size:15px; line-height:2;">
+      <li><strong>PCAP files</strong> — Packet capture format; the standard for saving captured traffic</li>
+      <li><strong>Display Filters</strong> — Powerful expressions to filter displayed packets (e.g., <code>http</code>, <code>ip.addr == 10.0.0.1</code>)</li>
+      <li><strong>Capture Filters</strong> — BPF (Berkeley Packet Filter) syntax applied during capture to limit what is recorded</li>
+      <li><strong>Follow TCP/HTTP Stream</strong> — Reconstructs the full conversation between two hosts</li>
+      <li><strong>Statistics → Protocol Hierarchy</strong> — Shows a breakdown of all protocols in the capture</li>
+      <li><strong>Expert Information</strong> — Flags anomalies, errors, and warnings automatically</li>
+    </ul>
+    <p>From a forensic standpoint, Wireshark is used to detect port scanning, ARP spoofing, DNS poisoning, data exfiltration, C2 (command-and-control) communications, and unencrypted credential transmission.</p>
+    <div class="info-chips">
+      <span class="chip">Wireshark</span>
+      <span class="chip">PCAP Analysis</span>
+      <span class="chip">TCP/IP</span>
+      <span class="chip">Display Filters</span>
+      <span class="chip">Network Forensics</span>
+    </div>
+  </div>
+
+  <div class="content-block">
+    <h2><span class="icon">🛠️</span> Tools Required</h2>
+    <p><strong>Wireshark (v4.x)</strong> — The primary packet capture and analysis tool.</p>
+    <p><strong>Npcap</strong> — Windows packet capture driver required by Wireshark.</p>
+    <p><strong>A network interface</strong> — Wi-Fi or Ethernet adapter to capture traffic from.</p>
+  </div>
+
+  <div class="content-block">
+    <h2><span class="icon">📋</span> Procedure</h2>
+    <ol class="steps-list">
+      <li>
+        <div class="step-content">
+          <h4>Launch Wireshark and Select Interface</h4>
+          <p>Open Wireshark. The welcome screen shows all available network interfaces with a traffic activity graph. Double-click the active interface (e.g., Wi-Fi or Ethernet) to begin capture.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <h4>Generate Test Traffic</h4>
+          <p>Open a browser and visit an HTTP website (not HTTPS) to generate visible traffic. Alternatively, use <code>ping google.com</code> in Command Prompt to generate ICMP packets.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <h4>Stop the Capture</h4>
+          <p>Click the red Stop button after 30 seconds. The captured packets are now displayed in the main panel. Save the capture as <code>lab_capture.pcap</code> via File → Save As.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <h4>Apply Display Filters</h4>
+          <p>Use the filter bar to isolate specific protocols:</p>
+          <div class="code-block"># Show only HTTP traffic
+http
+
+# Show traffic to/from a specific IP
+ip.addr == 142.250.190.78
+
+# Show only DNS queries
+dns
+
+# Show TCP handshakes (SYN packets)
+tcp.flags.syn == 1 and tcp.flags.ack == 0</div>
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <h4>Follow an HTTP Stream</h4>
+          <p>Right-click any HTTP packet and select <strong>Follow → HTTP Stream</strong>. This reconstructs the full request-response conversation, showing HTTP headers, request body, and server response in plain text.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <h4>Analyse Protocol Hierarchy</h4>
+          <p>Go to <strong>Statistics → Protocol Hierarchy</strong>. This shows the percentage of traffic belonging to each protocol, helpful for identifying unusual protocol usage.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <h4>Examine IO Graph</h4>
+          <p>Go to <strong>Statistics → IO Graph</strong>. This visualises packet rate over time. Traffic spikes may indicate a data transfer, port scan, or DDoS event.</p>
+        </div>
+      </li>
+    </ol>
+  </div>
+
+  <div class="content-block">
+    <h2><span class="icon">🖼️</span> Screenshots</h2>
+    <div class="img-row">
+      <div class="img-placeholder"><div class="icon">🖼️</div>Wireshark — Capture in Progress</div>
+      <div class="img-placeholder"><div class="icon">🖼️</div>HTTP Stream Reconstruction</div>
+      <div class="img-placeholder"><div class="icon">🖼️</div>Protocol Hierarchy Statistics</div>
+    </div>
+  </div>
+
+  <div class="content-block">
+    <h2><span class="icon">📝</span> Observations &amp; Result</h2>
+    <p>Wireshark successfully captured live network traffic. HTTP stream reconstruction revealed request headers including the Host, User-Agent, and response status codes. DNS queries showed domain resolution for visited websites. The Protocol Hierarchy revealed that the majority of traffic was TCP, with HTTP and DNS as the top application-layer protocols. The IO Graph showed a clear spike during the browser session.</p>
+    <p><strong>Result:</strong> Network packets were successfully captured and analyzed using Wireshark, demonstrating its capability as a forensic tool for network traffic inspection and evidence collection.</p>
+  </div>
+
+  <div class="exp-nav">
+    <a href="exp7.html">← Experiment 07</a>
+    <a href="exp9.html">Experiment 09 →</a>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  <p>Digital Forensics Laboratory &nbsp;·&nbsp; <strong>Jagadeesh P</strong> &nbsp;·&nbsp; Roll No: 2023000042 &nbsp;·&nbsp; GITAM University</p>
+</footer>
+
+</body>
+</html>

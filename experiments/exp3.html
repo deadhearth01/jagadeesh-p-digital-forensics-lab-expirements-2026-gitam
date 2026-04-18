@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Exp 3 — EXIF Data Extraction | Jagadeesh P</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&family=Roboto:wght@400;500&family=Roboto+Mono&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="../index.html" class="site-logo">
+      <div class="logo-icon">J</div>
+      <span class="logo-text">Jagadeesh P</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="../index.html" class="active">Experiments</a></li>
+      <li><a href="../about.html">About</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="breadcrumb">
+  <a href="../index.html">Home</a>
+  <span>/</span>
+  <span>Experiment 03 — EXIF Data Extraction</span>
+</div>
+
+<div class="exp-header">
+  <div class="exp-num">Experiment 03</div>
+  <h1>Extraction of EXIF Data from Image Files Using Exifreader Software</h1>
+</div>
+
+<div class="page-wrap">
+
+  <div class="content-block">
+    <h2><span class="icon">🎯</span> Aim</h2>
+    <p>To extract and analyze the Exchangeable Image File Format (EXIF) metadata from image files using Exifreader software, and to understand how image metadata serves as forensic evidence.</p>
+  </div>
+
+  <div class="content-block">
+    <h2><span class="icon">📖</span> Theory</h2>
+    <p><strong>EXIF (Exchangeable Image File Format)</strong> is a standard that specifies the formats for images, sound, and ancillary tags used by digital cameras, smartphones, and scanners. EXIF metadata is embedded directly within JPEG, TIFF, and other image file formats.</p>
+    <p>EXIF data can contain a wealth of forensically valuable information:</p>
+    <ul style="margin-left:20px; color:#5f6368; font-size:15px; line-height:2;">
+      <li><strong>GPS Coordinates</strong> — Latitude, longitude, and altitude where the photo was taken</li>
+      <li><strong>Timestamps</strong> — Date and time of capture (DateTimeOriginal, DateTimeDigitized)</li>
+      <li><strong>Device Information</strong> — Camera make, model, software version</li>
+      <li><strong>Camera Settings</strong> — Aperture, shutter speed, ISO, focal length, flash status</li>
+      <li><strong>Thumbnail</strong> — An embedded thumbnail that may differ from the modified image</li>
+    </ul>
+    <p>In criminal investigations, GPS data embedded in photos has been used to locate suspects, place victims at crime scenes, and corroborate or contradict alibis. Notably, metadata can persist even when images are shared on social media (though many platforms strip EXIF on upload).</p>
+    <div class="info-chips">
+      <span class="chip">EXIF Metadata</span>
+      <span class="chip">GPS Forensics</span>
+      <span class="chip">Image Analysis</span>
+      <span class="chip">Exifreader</span>
+      <span class="chip">Digital Evidence</span>
+    </div>
+  </div>
+
+  <div class="content-block">
+    <h2><span class="icon">🛠️</span> Tools Required</h2>
+    <p><strong>Exifreader</strong> — A lightweight metadata viewer that displays all EXIF, IPTC, and XMP tags embedded in image files.</p>
+    <p><strong>ExifTool by Phil Harvey</strong> — A command-line alternative for batch EXIF extraction and editing.</p>
+    <p><strong>Sample JPEG images</strong> — Preferably taken with a smartphone with GPS enabled to demonstrate location metadata.</p>
+  </div>
+
+  <div class="content-block">
+    <h2><span class="icon">📋</span> Procedure</h2>
+    <ol class="steps-list">
+      <li>
+        <div class="step-content">
+          <h4>Collect Sample Images</h4>
+          <p>Gather JPEG images taken with a camera or smartphone. Ensure at least one image was captured with GPS location services enabled.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <h4>Install and Open Exifreader</h4>
+          <p>Download and install Exifreader. Launch the application and use File → Open to load the sample image.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <h4>Read EXIF Tags</h4>
+          <p>The software will display all embedded metadata. Record the following tags: <code>DateTimeOriginal</code>, <code>Make</code>, <code>Model</code>, <code>GPS Latitude</code>, <code>GPS Longitude</code>, <code>Software</code>.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <h4>Map GPS Coordinates</h4>
+          <p>Copy the GPS latitude and longitude values. Open Google Maps and paste the coordinates to verify the geographic location where the photo was taken.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <h4>Use ExifTool for Batch Extraction</h4>
+          <p>Open Command Prompt and run ExifTool to extract metadata from all images in a directory:</p>
+          <div class="code-block">exiftool -csv *.jpg > exif_report.csv</div>
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <h4>Analyse Embedded Thumbnail</h4>
+          <p>Use Exifreader to extract the embedded thumbnail image. Compare it to the main image — discrepancies may indicate the image has been edited after capture (anti-forensic indicator).</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <h4>Document All Metadata</h4>
+          <p>Record all extracted EXIF fields in the lab report with their values and forensic significance.</p>
+        </div>
+      </li>
+    </ol>
+  </div>
+
+  <div class="content-block">
+    <h2><span class="icon">🖼️</span> Screenshots</h2>
+    <div class="img-row">
+      <div class="img-placeholder"><div class="icon">🖼️</div>Exifreader — Full EXIF Table</div>
+      <div class="img-placeholder"><div class="icon">🖼️</div>GPS Coordinates on Google Maps</div>
+      <div class="img-placeholder"><div class="icon">🖼️</div>ExifTool CSV Output</div>
+    </div>
+  </div>
+
+  <div class="content-block">
+    <h2><span class="icon">📝</span> Observations &amp; Result</h2>
+    <p>The EXIF data extracted from the sample images revealed the exact date, time, and GPS location of capture, along with the device make and model. The embedded thumbnail matched the main image, indicating no post-capture editing. ExifTool successfully produced a structured CSV report suitable for forensic documentation.</p>
+    <p><strong>Result:</strong> EXIF metadata was successfully extracted from image files using Exifreader, demonstrating the significant forensic value of image metadata in locating suspects and establishing timelines.</p>
+  </div>
+
+  <div class="exp-nav">
+    <a href="exp2.html">← Experiment 02</a>
+    <a href="exp4.html">Experiment 04 →</a>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  <p>Digital Forensics Laboratory &nbsp;·&nbsp; <strong>Jagadeesh P</strong> &nbsp;·&nbsp; Roll No: 2023000042 &nbsp;·&nbsp; GITAM University</p>
+</footer>
+
+</body>
+</html>

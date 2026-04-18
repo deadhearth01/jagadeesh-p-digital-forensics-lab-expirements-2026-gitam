@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Exp 1 — Recovering Deleted Files | Jagadeesh P</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&family=Roboto:wght@400;500&family=Roboto+Mono&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="../index.html" class="site-logo">
+      <div class="logo-icon">J</div>
+      <span class="logo-text">Jagadeesh P</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="../index.html#experiments" class="active">Experiments</a></li>
+      <li><a href="../about.html">About</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="breadcrumb">
+  <a href="../index.html">Home</a>
+  <span>/</span>
+  <span>Experiment 01 — Recovering Deleted Files</span>
+</div>
+
+<div class="exp-header">
+  <div class="exp-num">Experiment 01</div>
+  <h1>Recovering Deleted Files Using Forensic Tools</h1>
+</div>
+
+<div class="page-wrap">
+
+  <div class="content-block">
+    <h2><span class="icon">🎯</span> Aim</h2>
+    <p>To recover deleted files from a storage device using digital forensic tools such as Recuva and Autopsy, and to understand how deleted data can be retrieved for forensic investigation purposes.</p>
+  </div>
+
+  <div class="content-block">
+    <h2><span class="icon">📖</span> Theory</h2>
+    <p>When a file is deleted from a storage device, the operating system does not immediately erase the actual data. Instead, it marks the space occupied by the file as available for reuse and removes the file's entry from the file allocation table (FAT) or Master File Table (MFT). The actual data remains on the disk until it is overwritten by new data.</p>
+    <p>Digital forensic investigators exploit this behavior to recover deleted files. Tools like <strong>Recuva</strong> and <strong>Autopsy</strong> scan the raw disk sectors, reconstruct the file system structures, and locate file signatures (magic bytes) to carve out recoverable files.</p>
+    <p><strong>File Carving</strong> is a technique used to extract files from raw data by searching for known file headers and footers without relying on file system metadata. For example, JPEG images begin with the hex signature <code>FF D8 FF</code> and end with <code>FF D9</code>.</p>
+    <p>Forensic recovery is a critical step in cybercrime investigations. Evidence such as deleted documents, images, emails, and database records can be recovered from hard drives, USB drives, memory cards, and solid-state drives (SSDs). However, SSDs use TRIM commands that may make recovery harder compared to traditional HDDs.</p>
+    <div class="info-chips">
+      <span class="chip">File Carving</span>
+      <span class="chip">MFT Analysis</span>
+      <span class="chip">Recuva</span>
+      <span class="chip">Autopsy</span>
+      <span class="chip">HDD / SSD</span>
+    </div>
+  </div>
+
+  <div class="content-block">
+    <h2><span class="icon">🛠️</span> Tools Required</h2>
+    <p><strong>Recuva</strong> — A free Windows utility by Piriform that scans storage media for deleted files and recovers them with a user-friendly interface.</p>
+    <p><strong>Autopsy</strong> — An open-source digital forensics platform used by law enforcement and investigators to analyze disk images and recover deleted data.</p>
+    <p><strong>Test Storage Device</strong> — A USB drive or hard disk partition with intentionally deleted files for demonstration.</p>
+  </div>
+
+  <div class="content-block">
+    <h2><span class="icon">📋</span> Procedure</h2>
+    <ol class="steps-list">
+      <li>
+        <div class="step-content">
+          <h4>Prepare the Test Environment</h4>
+          <p>Copy sample files (images, documents, text files) onto a USB drive or test partition. Delete several files using the standard OS delete operation and also empty the Recycle Bin.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <h4>Launch Recuva</h4>
+          <p>Open Recuva and select the drive letter corresponding to your test device. Choose "All Files" in the file type wizard and click "Start" to begin the scan.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <h4>Review Scan Results</h4>
+          <p>Recuva displays a list of recoverable files colour-coded by recoverability: green (excellent), orange (poor), red (unrecoverable). Note which files are still recoverable and their original paths.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <h4>Recover Selected Files</h4>
+          <p>Select the files you wish to recover, click "Recover", and choose a destination folder different from the source drive to avoid overwriting evidence.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <h4>Create a Disk Image with Autopsy</h4>
+          <p>Open Autopsy and create a new case. Add the USB drive as a data source. Autopsy will ingest the drive and index all recoverable files including deleted items.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <h4>Analyse Results in Autopsy</h4>
+          <p>Navigate to the "Deleted Files" section in the tree view. Examine file metadata such as timestamps, file size, and parent directory. Export relevant files as evidence.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <h4>Document Findings</h4>
+          <p>Record the number of files recovered, their types, and recoverability status. Generate the Autopsy case report in HTML or PDF format.</p>
+        </div>
+      </li>
+    </ol>
+  </div>
+
+  <div class="content-block">
+    <h2><span class="icon">🖼️</span> Screenshots</h2>
+    <div class="img-row">
+      <div class="img-placeholder"><div class="icon">🖼️</div>Recuva Scan Results</div>
+      <div class="img-placeholder"><div class="icon">🖼️</div>Autopsy Deleted Files View</div>
+      <div class="img-placeholder"><div class="icon">🖼️</div>Recovered File Preview</div>
+    </div>
+    <p style="font-size:13px; color:#5f6368; margin-top:8px;">Add your lab screenshots in place of the placeholders above.</p>
+  </div>
+
+  <div class="content-block">
+    <h2><span class="icon">📝</span> Observations &amp; Result</h2>
+    <p>Files that were recently deleted and had not been overwritten were successfully recovered using both Recuva and Autopsy. Files deleted earlier and partially overwritten showed degraded recovery quality. Autopsy provided richer metadata including original file paths and MAC (Modified, Accessed, Created) timestamps, which are critical for forensic timelines.</p>
+    <p><strong>Result:</strong> Deleted files were successfully recovered using Recuva and Autopsy, demonstrating that standard file deletion does not permanently erase data from storage media.</p>
+  </div>
+
+  <div class="exp-nav">
+    <a href="../index.html">← Back to Home</a>
+    <a href="exp2.html">Experiment 02 →</a>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  <p>Digital Forensics Laboratory &nbsp;·&nbsp; <strong>Jagadeesh P</strong> &nbsp;·&nbsp; Roll No: 2023000042 &nbsp;·&nbsp; GITAM University</p>
+</footer>
+
+</body>
+</html>

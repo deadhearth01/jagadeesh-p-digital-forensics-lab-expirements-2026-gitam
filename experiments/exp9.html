@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Exp 9 — Sysinternals for Process Monitoring | Jagadeesh P</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&family=Roboto:wght@400;500&family=Roboto+Mono&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="../index.html" class="site-logo">
+      <div class="logo-icon">J</div>
+      <span class="logo-text">Jagadeesh P</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="../index.html" class="active">Experiments</a></li>
+      <li><a href="../about.html">About</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="breadcrumb">
+  <a href="../index.html">Home</a>
+  <span>/</span>
+  <span>Experiment 09 — Sysinternals for Process Monitoring</span>
+</div>
+
+<div class="exp-header">
+  <div class="exp-num">Experiment 09</div>
+  <h1>Using the Sysinternals Suite for Network Tracking and Process Monitoring</h1>
+</div>
+
+<div class="page-wrap">
+
+  <div class="content-block">
+    <h2><span class="icon">🎯</span> Aim</h2>
+    <p>To use the Microsoft Sysinternals suite — specifically Process Monitor (Procmon), Process Explorer, and TCPView — to monitor running processes, track system activity, and observe network connections in real time for forensic investigation.</p>
+  </div>
+
+  <div class="content-block">
+    <h2><span class="icon">📖</span> Theory</h2>
+    <p>The <strong>Sysinternals Suite</strong> is a collection of advanced Windows system utilities developed by Mark Russinovich and Bryce Cogswell, now maintained by Microsoft. It is an indispensable toolkit for Windows forensic investigators, incident responders, and malware analysts.</p>
+    <p>Key tools in the Sysinternals suite:</p>
+    <ul style="margin-left:20px; color:#5f6368; font-size:15px; line-height:2;">
+      <li><strong>Process Monitor (Procmon)</strong> — Monitors file system, registry, network, and process/thread activity in real time with extensive filtering capabilities</li>
+      <li><strong>Process Explorer</strong> — An advanced task manager that shows detailed information about running processes, including DLLs loaded, parent-child relationships, and VirusTotal integration</li>
+      <li><strong>TCPView</strong> — Displays all active TCP and UDP endpoints with the associated process name and PID</li>
+      <li><strong>Autoruns</strong> — Shows all programs configured to run at startup — critical for detecting malware persistence</li>
+      <li><strong>PsTools</strong> — Command-line tools for managing processes and services on local or remote machines</li>
+    </ul>
+    <p>In a forensic context, Sysinternals tools are used during <strong>live response</strong> investigations to capture volatile data — running processes, active network connections, registry changes, and file system activity — that would be lost after a system reboot.</p>
+    <p>Process Monitor's ability to record <strong>every</strong> file, registry, and network event (with timestamps, call stacks, and process details) makes it uniquely powerful for tracking malware behavior and identifying indicators of compromise (IOCs).</p>
+    <div class="info-chips">
+      <span class="chip">Sysinternals</span>
+      <span class="chip">Process Monitor</span>
+      <span class="chip">TCPView</span>
+      <span class="chip">Live Response</span>
+      <span class="chip">Malware Analysis</span>
+    </div>
+  </div>
+
+  <div class="content-block">
+    <h2><span class="icon">🛠️</span> Tools Required</h2>
+    <p><strong>Sysinternals Suite</strong> — Downloadable from Microsoft (live.sysinternals.com or as a ZIP). Key utilities: <code>procmon.exe</code>, <code>procexp.exe</code>, <code>tcpview.exe</code>, <code>autoruns.exe</code>.</p>
+    <p><strong>Windows OS (7/10/11)</strong> — The environment in which the tools operate.</p>
+    <p><strong>Administrator privileges</strong> — Required for kernel-level process monitoring.</p>
+  </div>
+
+  <div class="content-block">
+    <h2><span class="icon">📋</span> Procedure — Process Monitor</h2>
+    <ol class="steps-list">
+      <li>
+        <div class="step-content">
+          <h4>Launch Process Monitor as Administrator</h4>
+          <p>Right-click <code>Procmon.exe</code> and choose "Run as Administrator". Accept the EULA. Procmon immediately starts capturing all system events.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <h4>Apply a Filter to Focus on a Process</h4>
+          <p>Go to <strong>Filter → Filter (Ctrl+L)</strong>. Add a filter: <em>Process Name → is → chrome.exe → Include</em>. Click Add, then OK. Now only Chrome's activity is shown.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <h4>Observe File and Registry Activity</h4>
+          <p>Open Chrome and navigate to a website. Observe Procmon capturing file reads/writes, registry accesses, and network connections generated by Chrome. Note the file paths and registry keys accessed.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <h4>Save the Procmon Log</h4>
+          <p>Stop capture (Ctrl+E) and save the log as a <code>.PML</code> file for later analysis. This log can be loaded offline for investigation.</p>
+        </div>
+      </li>
+    </ol>
+  </div>
+
+  <div class="content-block">
+    <h2><span class="icon">📋</span> Procedure — TCPView</h2>
+    <ol class="steps-list">
+      <li>
+        <div class="step-content">
+          <h4>Launch TCPView as Administrator</h4>
+          <p>Run <code>tcpview.exe</code> as Administrator. The tool immediately lists all active TCP/UDP connections with process name, PID, local address, remote address, and state.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <h4>Identify Active Connections</h4>
+          <p>Look for <code>ESTABLISHED</code> TCP connections. Note which processes are communicating with external IP addresses. Connections to unknown remote IPs may indicate malware C2 communications.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <h4>Kill a Suspicious Connection</h4>
+          <p>Right-click any suspicious connection and select <strong>Close Connection</strong>. This terminates the TCP session without ending the process.</p>
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <h4>Document All Active Connections</h4>
+          <p>Go to <strong>File → Save</strong> to export all active connections as a <code>.txt</code> file for the forensic report.</p>
+        </div>
+      </li>
+    </ol>
+  </div>
+
+  <div class="content-block">
+    <h2><span class="icon">🖼️</span> Screenshots</h2>
+    <div class="img-row">
+      <div class="img-placeholder"><div class="icon">🖼️</div>Process Monitor — Event Log</div>
+      <div class="img-placeholder"><div class="icon">🖼️</div>TCPView — Active Connections</div>
+      <div class="img-placeholder"><div class="icon">🖼️</div>Process Explorer — Process Tree</div>
+    </div>
+  </div>
+
+  <div class="content-block">
+    <h2><span class="icon">📝</span> Observations &amp; Result</h2>
+    <p>Process Monitor recorded all file system, registry, and network events generated by the monitored process. TCPView revealed all active network connections along with the owning process, enabling identification of any unauthorized outbound connections. Process Explorer provided a detailed process tree showing parent-child relationships and loaded DLLs, which is essential for detecting process injection and malware masquerading as legitimate processes.</p>
+    <p><strong>Result:</strong> The Sysinternals suite was used effectively for live system forensics — monitoring process activity, network connections, and system events in real time, demonstrating its critical role in incident response and forensic investigation.</p>
+  </div>
+
+  <div class="exp-nav">
+    <a href="exp8.html">← Experiment 08</a>
+    <a href="../index.html">Back to Home →</a>
+  </div>
+
+</div>
+
+<footer class="site-footer">
+  <p>Digital Forensics Laboratory &nbsp;·&nbsp; <strong>Jagadeesh P</strong> &nbsp;·&nbsp; Roll No: 2023000042 &nbsp;·&nbsp; GITAM University</p>
+</footer>
+
+</body>
+</html>
